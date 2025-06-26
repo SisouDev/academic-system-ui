@@ -1,15 +1,26 @@
-import { useEffect } from "react";
-import { Dashboard } from "./pages/Dashboard";
+import { Routes, Route } from 'react-router-dom';
 
-import UIkit from 'uikit';
-import Icons from 'uikit/dist/js/uikit-icons';
+import { DashboardLayout } from './layouts/DashboardLayout.tsx';
+import { ProtectedRoute } from './components/ProtectedRoute';
+
+import { LoginPage } from './pages/auth/LoginPage.tsx';
+import { Dashboard } from './pages/Dashboard';
+import { StudentListPage } from './pages/student/StudentListPage.tsx';
+
 
 export default function App() {
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        UIkit.use(Icons);
-    }, []);
+    return (
+        <Routes>
+            <Route path="/login" element={<LoginPage />} />
 
-    return <Dashboard />;
+            <Route element={<ProtectedRoute />}>
+                <Route path="/" element={<DashboardLayout />}>
+                    <Route index element={<Dashboard />} />
+                    <Route path="alunos" element={<StudentListPage />} />
+                </Route>
+            </Route>
+
+            <Route path="*" element={<h1>404 - Página Não Encontrada</h1>} />
+        </Routes>
+    );
 }
-

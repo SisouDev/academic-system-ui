@@ -1,0 +1,43 @@
+.user-profile-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 24px;
+  max-width: 350px;
+}
+
+.user-profile-card__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.user-profile-card__identity {
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+}
+
+.user-profile-card__role {
+  font-size: 0.9rem;
+  color: #6b7280;
+  background-color: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.user-profile-card__contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #374151;
+  margin-bottom: 8px;
+
+  svg {
+    color: #9ca3af;
+  }
+}

@@ -1,18 +1,20 @@
+@use 'theme';
+
 body {
-  background-color: $cor-fundo-pagina;
-  color: $cor-texto-principal;
-  font-family: $fonte-principal;
-  font-size: $tamanho-fonte-base;
+  background-color: theme.$cor-fundo-pagina;
+  color: theme.$cor-texto-principal;
+  font-family: theme.$fonte-principal;
+  font-size: theme.$tamanho-fonte-base;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $fonte-principal;
-  font-weight: $peso-fonte-bold;
-  color: $cor-texto-principal;
+  font-family: theme.$fonte-principal;
+  font-weight: theme.$peso-fonte-bold;
+  color: theme.$cor-texto-principal;
 }
 
 a {
-  color: $cor-primaria;
+  color: theme.$cor-primaria;
   text-decoration: none;
 
   &:hover {
