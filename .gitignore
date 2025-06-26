@@ -1,0 +1,56 @@
+
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Dependências
+node_modules/
+
+# Build e preview
+dist/
+.vite/
+vite.config.ts
+
+# TypeScript
+*.tsbuildinfo
+
+
+# ESLint cache
+.eslintcache
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# WebStorm / JetBrains IDEs
+.idea/
+
+# Arquivos do sistema
+Thumbs.db
+
+# Arquivos temporários
+*.tmp
+*.swp
+*.swo
+
+.env
+.env.*

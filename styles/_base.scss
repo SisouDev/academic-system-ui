@@ -1,0 +1,21 @@
+body {
+  background-color: $cor-fundo-pagina;
+  color: $cor-texto-principal;
+  font-family: $fonte-principal;
+  font-size: $tamanho-fonte-base;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $fonte-principal;
+  font-weight: $peso-fonte-bold;
+  color: $cor-texto-principal;
+}
+
+a {
+  color: $cor-primaria;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
