@@ -4,23 +4,26 @@ import './DataTable.scss';
 export type ColumnDef<T> = {
     key: keyof T;
     label: string;
+    render?: (item: T) => React.ReactNode;
 };
 
 type DataTableProps<T> = {
     columns: ColumnDef<T>[];
     data: T[];
-    renderActions?: (item: T) => React.ReactNode; 
+    renderActions?: (item: T) => React.ReactNode;
     isLoading?: boolean;
     emptyMessage?: string;
+    className?: string;
 };
 
 export function DataTable<T extends { id: string | number }>({
-                                                     columns,
-                                                     data,
-                                                     renderActions,
-                                                     isLoading = false,
-                                                     emptyMessage = "Nenhum dado encontrado.",
-                                                 }: DataTableProps<T>) {
+                                                                 columns,
+                                                                 data,
+                                                                 renderActions,
+                                                                 isLoading = false,
+                                                                 emptyMessage = "Nenhum dado encontrado.",
+                                                                 className = "",
+                                                             }: DataTableProps<T>) {
 
     if (isLoading) {
         return <div className="datatable-state"><div data-uk-spinner></div></div>;
@@ -32,7 +35,7 @@ export function DataTable<T extends { id: string | number }>({
 
     return (
         <div className="uk-overflow-auto">
-            <table className="datatable uk-table uk-table-hover uk-table-divider">
+            <table className={`datatable uk-table uk-table-hover uk-table-divider ${className}`}>
                 <thead>
                 <tr>
                     {columns.map((col) => (
@@ -46,7 +49,7 @@ export function DataTable<T extends { id: string | number }>({
                     <tr key={item.id}>
                         {columns.map((col) => (
                             <td key={`${item.id}-${String(col.key)}`}>
-                                {String(item[col.key])}
+                                {col.render ? col.render(item) : String(item[col.key])}
                             </td>
                         ))}
                         {renderActions && (

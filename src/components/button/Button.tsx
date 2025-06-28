@@ -3,7 +3,7 @@ import './Button.scss';
 
 type ButtonProps = {
     children: React.ReactNode;
-    variant?: 'primary' | 'secondary' | 'danger' | 'default';
+    variant?: 'primary' | 'secondary' | 'danger' | 'default' | 'success';
     size?: 'small' | 'medium' | 'large';
     isLoading?: boolean;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;

@@ -1,4 +1,3 @@
-// src/pages/Auth/LoginPage.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/button';
@@ -6,9 +5,11 @@ import { Input } from '../../components/input';
 import { Heading } from '../../components/Heading';
 import { SchoolIcon, KeyRound } from 'lucide-react';
 import api from '../../services/api';
+import { useAuth } from '../../contexts/AuthContext';
 import './LoginPage.scss';
 
 export function LoginPage() {
+    const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -21,20 +22,13 @@ export function LoginPage() {
         setError('');
 
         try {
-            const response = await api.post('/auth/login', {
-                login: email,
-                password: password
-            });
-            const { token } = response.data;
-
-            if (token) {
-                localStorage.setItem('authToken', token);
-
-                navigate('/');
-            }
+            const response = await api.post('/auth/login', { login: email, password });
+            await login(response.data);
+            navigate('/');
         } catch (err) {
             console.error("Falha no login", err);
-            setError('Email ou senha inválidos. Tente novamente.');
+            setError('Login falhou. Verifique o console para erros de CORS ou de rede.');
+        } finally {
             setIsLoading(false);
         }
     };

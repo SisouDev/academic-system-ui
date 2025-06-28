@@ -1,4 +1,3 @@
-// src/components/UserForm/UserForm.tsx
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {type UserFormData, userFormSchema } from './userFormSchema';

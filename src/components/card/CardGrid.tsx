@@ -1,7 +1,8 @@
 import { Card } from './Card';
 
 type CardItem = {
-    id: number;
+
+    id: string | number;
     title: string;
     content: string;
 };

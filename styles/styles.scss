@@ -19,10 +19,22 @@
   border-radius: theme.$raio-borda-global;
 }
 
+.uk-alert-danger {
+  background-color: theme.$cor-perigo;
+  color: theme.$cor-perigo-texto;
+  border-color: theme.$cor-perigo-borda;
+}
+
+.uk-alert-warning {
+  background-color: theme.$cor-aviso;
+  color: theme.$cor-aviso-texto;
+  border-color: theme.$cor-aviso-borda;
+}
+
 .uk-alert-success {
   background-color: color.adjust(theme.$cor-sucesso, $lightness: 55%);
-  color: color.adjust(theme.$cor-sucesso, $lightness: -10%);
-  border-left: 5px solid theme.$cor-sucesso;
+  color: theme.$cor-sucesso-texto;
+  border-color: theme.$cor-sucesso-borda;
 }
 
 .uk-navbar-container.app-header {
@@ -71,5 +83,96 @@
     color: theme.$cor-branca;
     font-weight: theme.$peso-fonte-bold;
     border-left-color: theme.$cor-primaria;
+  }
+}
+.app-main-container {
+  max-width: 1600px;
+  width: 80%;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 640px) {
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+.student-table {
+  thead tr {
+    background-color: transparent;
+
+    th {
+      color: theme.$cor-primaria;
+      font-weight: theme.$peso-fonte-bold;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      border-bottom: 2px solid theme.$cor-primaria;
+      vertical-align: middle;
+    }
+  }
+
+  tbody td {
+    vertical-align: middle;
+  }
+
+  .uk-label {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-radius: theme.$raio-borda-global;
+  }
+
+  .uk-label.uk-label-success {
+    background-color: theme.$cor-sucesso !important;;
+    color: theme.$cor-sucesso-texto;
+  }
+
+  .uk-label-warning {
+    background-color: theme.$cor-aviso;
+    color: theme.$cor-aviso-texto;
+  }
+  .uk-label-danger {
+    background-color: theme.$cor-perigo;
+    color: theme.$cor-perigo-texto;
+  }
+
+  .uk-button-group {
+    > .uk-button {
+      border-radius: 0;
+      &:first-child {
+        border-top-left-radius: theme.$raio-borda-global;
+        border-bottom-left-radius: theme.$raio-borda-global;
+      }
+      &:last-child {
+        border-top-right-radius: theme.$raio-borda-global;
+        border-bottom-right-radius: theme.$raio-borda-global;
+      }
+    }
+  }
+}
+
+.uk-button-danger {
+  background-color: theme.$cor-perigo;
+  color: theme.$cor-perigo-texto !important;
+  border-radius: theme.$raio-borda-global;
+  border-color: theme.$cor-perigo-borda;
+
+  &:hover {
+    background-color: color.adjust(theme.$cor-perigo, $lightness: -5%);
+  }
+}
+
+
+.uk-button.app-button--success {
+  background-color: theme.$cor-sucesso;
+  color: theme.$cor-sucesso-texto !important;
+  border: 1px solid theme.$cor-sucesso-borda;
+
+  &:hover {
+    background-color: color.adjust(theme.$cor-sucesso, $lightness: -5%);
+    border-color: color.adjust(theme.$cor-sucesso-borda, $lightness: -5%);
   }
 }

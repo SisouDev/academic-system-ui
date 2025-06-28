@@ -8,7 +8,7 @@ import type { HalCollection } from '../../types/api';
 import { useNavigate } from 'react-router-dom';
 import UIkit from 'uikit';
 
-type Aluno = {
+type Professor = {
     id: number;
     fullName: string;
     email: string;
@@ -16,8 +16,8 @@ type Aluno = {
     personType: string;
 };
 
-const fetchStudents = async (institutionId: number): Promise<Aluno[]> => {
-    const { data } = await api.get<HalCollection<Aluno>>(`/api/v1/students?institutionId=${institutionId}`);
+const fetchTeachers = async (institutionId: number): Promise<Professor[]> => {
+    const { data } = await api.get<HalCollection<Professor>>(`/api/v1/teachers?institutionId=${institutionId}`);
     const embedded = data?._embedded;
     if (!embedded || Object.keys(embedded).length === 0) {
         return [];
@@ -26,55 +26,55 @@ const fetchStudents = async (institutionId: number): Promise<Aluno[]> => {
     return embedded[key] || [];
 };
 
-const updateStudentStatusRequest = async ({ studentId, status }: { studentId: number, status: string }) => {
-    const { data } = await api.patch(`/api/v1/students/${studentId}/status?status=${status}`);
+const updateTeacherStatusRequest = async ({ teacherId, status }: { teacherId: number, status: string }) => {
+    const { data } = await api.patch(`/api/v1/teachers/${teacherId}/status?status=${status}`);
     return data;
 };
 
-const colunas: ColumnDef<Aluno>[] = [
-    { key: 'fullName', label: 'Nome do Aluno' },
+const colunas: ColumnDef<Professor>[] = [
+    { key: 'fullName', label: 'Nome do Professor' },
     { key: 'email', label: 'Email' },
     {
         key: 'status',
         label: 'Status',
-        render: (aluno) => {
-            const statusUpper = aluno.status.toUpperCase();
+        render: (professor) => {
+            const statusUpper = professor.status.toUpperCase();
             let statusClass = 'uk-label-warning';
             if (statusUpper === 'ACTIVE') {
                 statusClass = 'uk-label-success';
             } else if (statusUpper === 'INACTIVE') {
                 statusClass = 'uk-label-danger';
             }
-            return <span className={`uk-label ${statusClass}`}>{aluno.status}</span>;
+            return <span className={`uk-label ${statusClass}`}>{professor.status}</span>;
         }
     },
 ];
 
-export function StudentListPage() {
+export function TeacherListPage() {
     const { user } = useAuth();
     const institutionId = user?.institutionId;
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
-    const { data: alunos, isLoading, isError } = useQuery({
-        queryKey: ['students', institutionId],
-        queryFn: () => fetchStudents(institutionId!),
+    const { data: professores, isLoading, isError } = useQuery({
+        queryKey: ['teachers', institutionId],
+        queryFn: () => fetchTeachers(institutionId!),
         enabled: !!institutionId,
     });
 
     const statusMutation = useMutation({
-        mutationFn: updateStudentStatusRequest,
+        mutationFn: updateTeacherStatusRequest,
         onSuccess: () => {
             UIkit.notification({
-                message: '<span data-uk-icon="icon: check"></span> Status do aluno alterado com sucesso!',
+                message: '<span data-uk-icon="icon: check"></span> Status do professor alterado com sucesso!',
                 status: 'success',
                 pos: 'top-right'
             });
-            queryClient.invalidateQueries({ queryKey: ['students'] });
+            queryClient.invalidateQueries({ queryKey: ['teachers'] });
         },
         onError: () => {
             UIkit.notification({
-                message: '<span data-uk-icon="icon: warning"></span> Erro ao alterar o status do aluno.',
+                message: '<span data-uk-icon="icon: warning"></span> Erro ao alterar o status do professor.',
                 status: 'danger',
                 pos: 'top-right'
             });
@@ -82,20 +82,20 @@ export function StudentListPage() {
     });
 
     const handleCreate = () => {
-        navigate('/alunos/novo');
+        navigate('/professores/novo');
     };
 
-    const handleEdit = (aluno: Aluno) => {
-        navigate(`/alunos/editar/${aluno.id}`);
+    const handleEdit = (professor: Professor) => {
+        navigate(`/professores/editar/${professor.id}`);
     };
 
-    const handleToggleStatus = (aluno: Aluno) => {
-        const isCurrentlyActive = aluno.status.toUpperCase() === 'ACTIVE';
+    const handleToggleStatus = (professor: Professor) => {
+        const isCurrentlyActive = professor.status.toUpperCase() === 'ACTIVE';
         const newStatus = isCurrentlyActive ? 'INACTIVE' : 'ACTIVE';
         const actionText = isCurrentlyActive ? 'desativar' : 'ativar';
 
-        UIkit.modal.confirm(`Tem certeza que deseja ${actionText} o aluno ${aluno.fullName}?`).then(() => {
-            statusMutation.mutate({ studentId: aluno.id, status: newStatus });
+        UIkit.modal.confirm(`Tem certeza que deseja ${actionText} o professor(a) ${professor.fullName}?`).then(() => {
+            statusMutation.mutate({ teacherId: professor.id, status: newStatus });
         }, () => {
         });
     };
@@ -112,7 +112,7 @@ export function StudentListPage() {
         if (isError) {
             return (
                 <div className="uk-alert-danger" data-uk-alert>
-                    <p>Erro ao carregar a lista de alunos.</p>
+                    <p>Erro ao carregar a lista de professores.</p>
                 </div>
             );
         }
@@ -120,16 +120,16 @@ export function StudentListPage() {
         return (
             <DataTable
                 columns={colunas}
-                data={alunos || []}
-                renderActions={(aluno: Aluno) => {
-                    const isCurrentlyActive = aluno.status.toUpperCase() === 'ACTIVE';
+                data={professores || []}
+                renderActions={(professor: Professor) => {
+                    const isCurrentlyActive = professor.status.toUpperCase() === 'ACTIVE';
                     const toggleButtonText = isCurrentlyActive ? 'Desativar' : 'Ativar';
                     const toggleButtonVariant = isCurrentlyActive ? 'danger' : 'success';
 
                     return (
                         <div className="uk-button-group">
-                            <Button size="small" variant="default" onClick={() => handleEdit(aluno)}>Editar</Button>
-                            <Button size="small" variant={toggleButtonVariant} onClick={() => handleToggleStatus(aluno)}>
+                            <Button size="small" variant="default" onClick={() => handleEdit(professor)}>Editar</Button>
+                            <Button size="small" variant={toggleButtonVariant} onClick={() => handleToggleStatus(professor)}>
                                 {toggleButtonText}
                             </Button>
                         </div>
@@ -141,9 +141,9 @@ export function StudentListPage() {
 
     return (
         <div>
-            <PageHeader title="Gerenciamento de Alunos">
+            <PageHeader title="Gerenciamento de Professores">
                 <Button variant="primary" onClick={handleCreate}>
-                    + Adicionar Aluno
+                    + Adicionar Professor
                 </Button>
             </PageHeader>
 
