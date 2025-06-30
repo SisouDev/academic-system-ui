@@ -1,11 +1,21 @@
+import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '../hook/useAuth.ts';
 
-export function ProtectedRoute() {
-    const token = localStorage.getItem('authToken');
+interface ProtectedRouteProps {
+    requiredRole?: string;
+}
 
-    if (!token) {
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ requiredRole }) => {
+    const { isAuthenticated, roles } = useAuth();
+
+    if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
     }
 
+    if (requiredRole && !roles.includes(requiredRole)) {
+        return <Navigate to="/unauthorized" replace />;
+    }
+
     return <Outlet />;
-}
+};

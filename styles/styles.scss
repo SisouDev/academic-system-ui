@@ -164,7 +164,17 @@
     background-color: color.adjust(theme.$cor-perigo, $lightness: -5%);
   }
 }
+.header-title-link {
+  text-decoration: none;
+  color: inherit;
 
+  &:hover,
+  &:focus,
+  &:visited {
+    text-decoration: none;
+    color: inherit;
+  }
+}
 
 .uk-button.app-button--success {
   background-color: theme.$cor-sucesso;
