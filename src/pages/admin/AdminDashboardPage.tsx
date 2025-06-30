@@ -4,6 +4,7 @@ import { StatsCard } from '../../components/admin/StatsCard';
 import { FaUserGraduate, FaChalkboardTeacher, FaBook, FaBuilding } from 'react-icons/fa';
 import '../Dashboard.scss';
 import {StudentDistributionChart} from "../../components/admin/StudentDistributionChart.tsx";
+import {RecentActivityFeed} from "../../components/admin/RecentActivityFeed.tsx";
 
 interface DashboardStats {
     studentCount: number;
@@ -67,6 +68,9 @@ export function AdminDashboardPage() {
             <div className="page-content-card uk-margin-large-top">
                 <h3 className="uk-card-title uk-text-bold">Distribuição de Alunos por Curso</h3>
                 <StudentDistributionChart />
+            </div>
+            <div className="page-content-card uk-margin-large-top">
+                <RecentActivityFeed />
             </div>
         </div>
     );

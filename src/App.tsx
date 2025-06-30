@@ -1,4 +1,4 @@
-import {Route, BrowserRouter} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 
 import { DashboardLayout } from './layouts/DashboardLayout.tsx';
 import { ProtectedRoute } from './components/ProtectedRoute';
@@ -15,18 +15,11 @@ import {AdminDashboardPage} from "./pages/admin/AdminDashboardPage.tsx";
 import {UnauthorizedPage} from "./pages/UnauthorizedPage.tsx";
 import {EmployeeListPage} from "./pages/admin/EmployeeListPage.tsx";
 import {Header} from "./components/header/Header.tsx";
-import {Toaster} from "react-hot-toast";
+import {RecentActivityPage} from "./pages/admin/RecentActivityPage.tsx";
 
 export default function App() {
     return (
-        <BrowserRouter>
-            <Toaster
-                position="top-right"
-                toastOptions={{
-                    success: { duration: 3000, style: { background: '#2ecc71', color: 'white' } },
-                    error: { duration: 5000, style: { background: '#e74c3c', color: 'white' } },
-                }}
-            />
+        <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
@@ -42,19 +35,20 @@ export default function App() {
                     <Route path="perfil/:userId" element={<ProfilePage />} />
                     <Route path="cursos/:courseId" element={<CourseDetailsPage />} />
 
-                <Route element={<ProtectedRoute requiredRole="ROLE_ADMIN" />}>
-                    <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
-                    <Route path="/admin/employees" element={<EmployeeListPage />} />
-                </Route>
+                    <Route element={<ProtectedRoute requiredRole="ROLE_ADMIN" />}>
+                        <Route path="admin/dashboard" element={<AdminDashboardPage />} />
+                        <Route path="admin/employees" element={<EmployeeListPage />} />
+                        <Route path="admin/recent-activity" element={<RecentActivityPage />} />
+                    </Route>
                 </Route>
             </Route>
 
             <Route path="*" element={
                 <div>
                     <Header />
-                    <h1>404 - Página Não Encontrada</h1>
+                    <h1 className="uk-text-center uk-padding">404 - Página Não Encontrada</h1>
                 </div>
             } />
-        </BrowserRouter>
+        </Routes>
     );
 }
