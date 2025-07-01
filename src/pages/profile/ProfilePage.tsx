@@ -135,13 +135,18 @@ export function ProfilePage() {
 
     const handleEditProfile = () => {
         if (!personDetails) return;
+
+        const isAdmin = loggedInUser?.roles.includes('ROLE_ADMIN');
         const type = personDetails.personType.toLowerCase();
-        const validTypes = ['student', 'teacher', 'employee'];
-        if (validTypes.includes(type)) {
-            navigate(`/${type}s/editar/${personDetails.id}`);
-        } else {
-            UIkit.notification({ message: 'Não há uma página de edição para este tipo de perfil.', status: 'warning', pos: 'top-right' });
+
+        if (isAdmin) {
+            navigate(`/admin/${type}s/edit/${personDetails.id}`);
         }
+        else if (isOwnProfile) {
+            navigate(`/me/edit`);
+        }
+
+        UIkit.notification({ message: 'Ação não permitida.', status: 'warning', pos: 'top-right' });
     };
 
     const isLoading = isLoadingBaseUser || isLoadingDetails;

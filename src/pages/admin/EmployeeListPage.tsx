@@ -89,8 +89,18 @@ function EmployeeTable() {
             header: () => <div className="uk-text-center">Ações</div>,
             cell: ({ row }) => (
                 <div className="actions-cell">
-                    <button className="uk-button uk-button-default uk-button-small" title="Editar Funcionário"><FiEdit /></button>
-                    <button className="uk-button uk-button-danger uk-button-small" title="Resetar Senha" onClick={() => handleResetClick(row.original)}><FiKey /></button>
+                    <Link to={`/admin/employees/edit/${row.original.id}`}>
+                        <button className="uk-button uk-button-default uk-button-small" title="Editar Funcionário">
+                            <FiEdit />
+                        </button>
+                    </Link>
+                    <button
+                        className="uk-button uk-button-danger uk-button-small"
+                        title="Resetar Senha"
+                        onClick={() => handleResetClick(row.original)}
+                    >
+                        <FiKey />
+                    </button>
                 </div>
             )
         })

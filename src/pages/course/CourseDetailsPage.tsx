@@ -64,7 +64,7 @@ export function CourseDetailsPage() {
 
     const renderContent = () => {
         if (isLoading) {
-            return <div className="uk-flex uk-flex-center uk-padding"><div data-uk-spinner="ratio: 2"></div></div>;
+            return <div className="uk-text-center uk-padding-large"><div data-uk-spinner="ratio: 2"></div></div>;
         }
         if (isError) {
             return (
@@ -83,7 +83,7 @@ export function CourseDetailsPage() {
                         <div className="uk-card-body">
                             <dl className="uk-description-list uk-description-list-divider">
                                 <dt>Departamento</dt>
-                                <dd>{course.department.name}</dd>
+                                <dd>{course?.department?.name ?? 'Não informado'}</dd>
                                 <dt>Duração</dt>
                                 <dd>{course.durationInSemesters} semestres</dd>
                                 <dt>Descrição</dt>
@@ -140,7 +140,7 @@ export function CourseDetailsPage() {
 
     return (
         <div>
-            <PageHeader title={isLoading ? 'Carregando...' : course?.name || 'Detalhes do Curso'}>
+            <PageHeader title={isLoading ? 'Carregando...' : course?.name ?? 'Detalhes do Curso'}>
                 <Link to="/" className="uk-button uk-button-default uk-border-rounded">
                     <span data-uk-icon="arrow-left"></span>
                     <span className="uk-margin-small-left">Voltar ao Painel</span>

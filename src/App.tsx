@@ -16,6 +16,9 @@ import {UnauthorizedPage} from "./pages/UnauthorizedPage.tsx";
 import {EmployeeListPage} from "./pages/admin/EmployeeListPage.tsx";
 import {Header} from "./components/header/Header.tsx";
 import {RecentActivityPage} from "./pages/admin/RecentActivityPage.tsx";
+import {SearchResultsPage} from "./pages/common/SearchResultsPage.tsx";
+import {MyProfileEditPage} from "./pages/profile/MyProfileEditPage.tsx";
+import {EmployeeFormPage} from "./pages/admin/EmployeeFormPage.tsx";
 
 export default function App() {
     return (
@@ -33,12 +36,15 @@ export default function App() {
                     <Route path="professores/novo" element={<TeacherFormPage />} />
                     <Route path="professores/editar/:teacherId" element={<TeacherFormPage />} />
                     <Route path="perfil/:userId" element={<ProfilePage />} />
+                    <Route path="/me/edit" element={<MyProfileEditPage />} />
                     <Route path="cursos/:courseId" element={<CourseDetailsPage />} />
-
+                    <Route path="search" element={<SearchResultsPage />} />
                     <Route element={<ProtectedRoute requiredRole="ROLE_ADMIN" />}>
                         <Route path="admin/dashboard" element={<AdminDashboardPage />} />
                         <Route path="admin/employees" element={<EmployeeListPage />} />
                         <Route path="admin/recent-activity" element={<RecentActivityPage />} />
+                        <Route path="admin/employees/novo" element={<EmployeeFormPage />} />
+                        <Route path="admin/employees/edit/:employeeId" element={<EmployeeFormPage />} />
                     </Route>
                 </Route>
             </Route>
