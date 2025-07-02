@@ -19,6 +19,8 @@ import {SearchResultsPage} from "./pages/common/SearchResultsPage.tsx";
 import {MyProfileEditPage} from "./pages/profile/MyProfileEditPage.tsx";
 import {EmployeeFormPage} from "./pages/admin/EmployeeFormPage.tsx";
 import {TeacherListPage} from "./pages/admin/TeacherListPage.tsx";
+import {CourseListPage} from "./pages/admin/CourseListPage.tsx";
+import {CourseFormPage} from "./pages/admin/CourseFormPage.tsx";
 
 export default function App() {
     return (
@@ -50,6 +52,10 @@ export default function App() {
                         <Route path="admin/teachers" element={<TeacherListPage />} />
                         <Route path="admin/teachers/novo" element={<TeacherFormPage />} />
                         <Route path="admin/teachers/edit/:teacherId" element={<TeacherFormPage />} />
+
+                        <Route path="admin/courses" element={<CourseListPage />} />
+                        <Route path="admin/courses/novo" element={<CourseFormPage />} />
+                        <Route path="admin/courses/edit/:courseId" element={<CourseFormPage />} />
                     </Route>
 
                 </Route>
