@@ -4,6 +4,7 @@ import './PageHeader.scss';
 
 type PageHeaderProps = {
     title: string;
+    description?: string;
     children?: React.ReactNode;
 };
 
