@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import api from '../services/api';
+import { jwtDecode } from 'jwt-decode';
 
 type User = {
     id: number;
@@ -36,6 +37,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const userData = localStorage.getItem('userData');
         if (token && userData) {
             setUser(JSON.parse(userData));
+            console.log("TOKEN RECEBIDO DO BACKEND:", token);
+            console.log("TOKEN DECODIFICADO:", jwtDecode(token));
             api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         }
         setIsLoading(false);

@@ -1,13 +1,15 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '../hook/useAuth.ts';
+import { useAuth, type UserRole } from '../hook/useAuth';
+
 
 interface ProtectedRouteProps {
-    requiredRole?: string;
+    requiredRole?: UserRole;
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ requiredRole }) => {
     const { isAuthenticated, roles } = useAuth();
+    console.log("ROLES VERIFICADAS PELO PROTECTEDROUTE:", roles);
 
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;

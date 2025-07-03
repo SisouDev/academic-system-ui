@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import api from '../../services/api';
 import { PageHeader } from '../../components/pageheader';
@@ -8,6 +8,7 @@ import { FiEdit, FiCheckSquare, FiBarChart2 } from 'react-icons/fi';
 import { Button } from '../../components/button';
 import { TeacherNotesModal } from '../../components/teacher/TeacherNotesModal';
 import UIkit from 'uikit';
+
 
 type ApiStudent = {
     enrollmentId: number;
@@ -26,16 +27,33 @@ type EnrolledStudent = {
 };
 
 type ApiResponse = {
-    _embedded?: { classlistStudentDtoList: ApiStudent[] };
+    _embedded?: { classListStudentDtoList: ApiStudent[] };
 };
 
-const fetchEnrolledStudents = async (courseSectionId: string): Promise<EnrolledStudent[]> => {
-    const response = await api.get<ApiResponse>(`/api/v1/enrollments/by-section/${courseSectionId}`);
 
-    return response.data._embedded?.classlistStudentDtoList.map(item => ({
-        ...item,
-        id: item.enrollmentId,
-    })) || [];
+const fetchEnrolledStudents = async (courseSectionId: string): Promise<EnrolledStudent[]> => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+        const response = await api.get<ApiResponse>(`/api/v1/enrollments/by-section/${courseSectionId}`);
+
+
+        const dtoList = response.data._embedded?.classListStudentDtoList;
+
+        if (!dtoList) {
+            return [];
+        }
+
+        return dtoList.map(apiItem => ({
+            id: apiItem.enrollmentId,
+            studentId: apiItem.studentId,
+            studentName: apiItem.studentName,
+            studentEmail: apiItem.studentEmail,
+            status: apiItem.status,
+        }));
+    } catch (err) {
+
+        throw err;
+    }
 };
 
 function ClassDetails() {
@@ -66,15 +84,17 @@ function ClassDetails() {
                         {isActive ? 'Ativo' : 'Outro'}
                     </span>
                 );
-            }
+            },
         },
     ];
 
     const renderActions = (student: EnrolledStudent) => (
         <div className="uk-button-group">
-            <Button size="small" title="Lançar Notas/Ver Histórico"><FiBarChart2 /></Button>
+            <Link to={`/teacher/class/${courseSectionId}/grades/${student.id}`}>
+                <Button size="small" title="Lançar Notas"><FiBarChart2 /></Button>
+            </Link>
             <Button size="small" title="Registrar Frequência"><FiCheckSquare /></Button>
-            <Button size="small" title="Ver/Adicionar Anotações" onClick={() => openNotesModal(student)}>
+            <Button size="small" title="Anotações" onClick={() => openNotesModal(student)}>
                 <FiEdit />
             </Button>
         </div>
@@ -84,7 +104,7 @@ function ClassDetails() {
         <div className="page-container">
             <PageHeader title="Alunos da Turma" />
             <div className="page-content-card">
-                {isError && <div className="uk-alert-danger">Erro ao carregar a lista de alunos.</div>}
+                {isError && <div className="uk-alert-danger" data-uk-alert><p>Erro ao carregar a lista de alunos.</p></div>}
                 <DataTable
                     columns={columns}
                     data={students || []}

@@ -15,11 +15,16 @@ type TaughtClass = {
     };
 };
 
-const fetchMyClasses = async (): Promise<TaughtClass[]> => {
-    const response = await api.get('/api/v1/teachers/me/sections');
-    return response.data || [];
+type ApiResponse = {
+    _embedded?: {
+        courseSectionSummaryDtoList: TaughtClass[];
+    };
 };
 
+const fetchMyClasses = async (): Promise<TaughtClass[]> => {
+    const response = await api.get<ApiResponse>('/api/v1/teachers/me/sections');
+    return response.data._embedded?.courseSectionSummaryDtoList || [];
+};
 function MyClasses() {
     const { fullName } = useAuth();
 

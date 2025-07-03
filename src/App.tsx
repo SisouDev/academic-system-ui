@@ -24,6 +24,7 @@ import {CourseFormPage} from "./pages/admin/CourseFormPage.tsx";
 import {MyClassesPage} from "./pages/teacher/MyClassesPage.tsx";
 import {LessonPlanPage} from "./pages/teacher/LessonPlanPage.tsx";
 import {ClassDetailsPage} from "./pages/teacher/ClassDetailsPage.tsx";
+import {GradebookPage} from "./pages/teacher/GradebookPage.tsx";
 
 export default function App() {
     return (
@@ -61,12 +62,10 @@ export default function App() {
                         <Route path="admin/courses/edit/:courseId" element={<CourseFormPage />} />
                     </Route>
                     <Route element={<ProtectedRoute requiredRole="ROLE_TEACHER" />}>
-                        <Route element={<DashboardLayout />}>
-                            <Route path="/teacher/my-classes" element={<MyClassesPage />} />
-                            <Route path="/teacher/class/:courseSectionId/lesson-plan" element={<LessonPlanPage />} />
-                            <Route path="/teacher/class/:courseSectionId/students" element={<ClassDetailsPage />} />
-
-                        </Route>
+                        <Route path="teacher/my-classes" element={<MyClassesPage />} />
+                        <Route path="teacher/class/:courseSectionId/lesson-plan" element={<LessonPlanPage />} />
+                        <Route path="teacher/class/:courseSectionId/students" element={<ClassDetailsPage />} />
+                        <Route path="teacher/class/:courseSectionId/grades" element={<GradebookPage />} />
                     </Route>
 
                 </Route>
