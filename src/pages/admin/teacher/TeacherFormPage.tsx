@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { PageHeader } from '../../components/pageheader';
+import { PageHeader } from '../../../components/pageheader';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useMutation, useQuery, useQueryClient, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import api from '../../services/api';
-import { useAuth } from '../../hook/useAuth';
+import api from '../../../services/api.ts';
+import { useAuth } from '../../../hook/useAuth.ts';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {object, string, type ObjectSchema} from 'yup';
 import type { AxiosError } from 'axios';

@@ -1,6 +1,6 @@
 import { PageHeader } from '../../components/pageheader';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useForm, type SubmitHandler, type FieldValues, type FieldErrors } from 'react-hook-form';
+import { useForm, type SubmitHandler, type FieldErrors } from 'react-hook-form';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from '../../services/api';
 import { useAuth } from '../../contexts/AuthContext';

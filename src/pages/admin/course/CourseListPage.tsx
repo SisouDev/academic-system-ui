@@ -1,7 +1,7 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import api from '../../services/api';
-import { DataTable, type ColumnDef } from '../../components/datatable';
+import api from '../../../services/api.ts';
+import { DataTable, type ColumnDef } from '../../../components/datatable';
 import { FiEdit, FiPlus } from 'react-icons/fi';
 
 type Course = {

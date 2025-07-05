@@ -1,9 +1,9 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import api from '../../services/api';
-import { DataTable, type ColumnDef } from '../../components/datatable';
-import { Button } from '../../components/button';
-import { useAuth } from '../../hook/useAuth';
+import api from '../../../services/api.ts';
+import { DataTable, type ColumnDef } from '../../../components/datatable';
+import { Button } from '../../../components/button';
+import { useAuth } from '../../../hook/useAuth.ts';
 import { FiEdit, FiPlus, FiPower } from 'react-icons/fi';
 import UIkit from 'uikit';
 import { toast } from 'react-hot-toast';

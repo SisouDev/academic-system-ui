@@ -7,11 +7,11 @@ import {
     useReactTable,
     type PaginationState,
 } from '@tanstack/react-table';
-import api from '../../services/api';
+import api from '../../../services/api.ts';
 import {FiEdit, FiKey, FiPlus} from "react-icons/fi";
 import {Link} from "react-router-dom";
 import './EmployeeListPage.scss';
-import {ConfirmationModal} from "../../components/common/ConfirmationModal.tsx";
+import {ConfirmationModal} from "../../../components/common/ConfirmationModal.tsx";
 import UIkit from "uikit";
 import { toast } from 'react-hot-toast';
 

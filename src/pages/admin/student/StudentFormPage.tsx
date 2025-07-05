@@ -3,8 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
-import api from '../../services/api';
-import { useAuth } from '../../contexts/AuthContext';
+import api from '../../../services/api.ts';
+import { useAuth } from '../../../contexts/AuthContext.tsx';
 import { FiSave } from 'react-icons/fi';
 
 

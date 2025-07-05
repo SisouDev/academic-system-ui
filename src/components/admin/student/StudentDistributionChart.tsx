@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import api from '../../services/api';
+import api from '../../../services/api.ts';
 
 type ChartData = {
     courseName: string;

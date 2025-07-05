@@ -4,12 +4,11 @@ import api from '../../services/api';
 import { toast } from 'react-hot-toast';
 import { PageHeader } from '../../components/pageheader';
 
+
 type Grade = { assessmentId?: number; score: number | null };
 type StudentRow = { enrollmentId: number; studentName: string; grades: Record<string, Grade> };
-type GradebookData = {
-    headers: { assessmentDefinitionId: number; title: string }[];
-    studentRows: StudentRow[];
-};
+type GradebookData = { headers: { assessmentDefinitionId: number; title: string }[], studentRows: StudentRow[] };
+
 
 const fetchGradebook = async (courseSectionId: string): Promise<GradebookData> => {
     const { data } = await api.get(`/api/v1/gradebooks?courseSectionId=${courseSectionId}`);
@@ -22,7 +21,7 @@ const saveGrade = async ({ enrollmentId, assessmentDefinitionId, score }: { enro
         assessmentDefinitionId,
         score,
         assessmentDate: new Date().toISOString().split('T')[0],
-        type: 'GRADE_ENTRY'
+        type: 'EXAM'
     });
 };
 
@@ -30,7 +29,7 @@ function Gradebook() {
     const { courseSectionId } = useParams<{ courseSectionId: string }>();
     const queryClient = useQueryClient();
 
-    const { data: gradebook, isLoading, isError } = useQuery({
+    const { data: gradebook, isLoading } = useQuery({
         queryKey: ['gradebook', courseSectionId],
         queryFn: () => fetchGradebook(courseSectionId!),
         enabled: !!courseSectionId,
@@ -46,19 +45,13 @@ function Gradebook() {
     });
 
     const handleGradeChange = (enrollmentId: number, assessmentDefinitionId: number, score: string) => {
-        if (score === '') {
-            updateGrade({ enrollmentId, assessmentDefinitionId, score: null });
-            return;
-        }
-
         const numericScore = parseFloat(score);
-        if (!isNaN(numericScore)) {
-            updateGrade({ enrollmentId, assessmentDefinitionId, score: numericScore });
+        if (!isNaN(numericScore) || score === '') {
+            updateGrade({ enrollmentId, assessmentDefinitionId, score: score === '' ? null : numericScore });
         }
     };
 
-    if (isLoading) return <div className="uk-text-center uk-padding"><div data-uk-spinner="ratio: 2"></div></div>;
-    if (isError) return <div className="uk-alert-danger">Erro ao carregar o diário de classe.</div>;
+    if (isLoading) return <div className="uk-text-center"><div data-uk-spinner></div></div>;
 
     return (
         <div className="page-container">
@@ -67,7 +60,7 @@ function Gradebook() {
                 <table className="uk-table uk-table-hover uk-table-striped uk-table-middle">
                     <thead>
                     <tr>
-                        <th>Aluno</th>
+                        <th className="uk-table-shrink">Aluno</th>
                         {gradebook?.headers.map(header => (
                             <th key={header.assessmentDefinitionId} className="uk-text-center">{header.title}</th>
                         ))}
@@ -84,9 +77,7 @@ function Gradebook() {
                                         className="uk-input uk-form-small uk-text-center"
                                         defaultValue={student.grades[header.assessmentDefinitionId]?.score ?? ''}
                                         onBlur={(e) => handleGradeChange(student.enrollmentId, header.assessmentDefinitionId, e.target.value)}
-                                        step="0.1"
-                                        min="0"
-                                        max="10"
+                                        step="0.1" min="0" max="10"
                                     />
                                 </td>
                             ))}
@@ -105,5 +96,5 @@ export function GradebookPage() {
         <QueryClientProvider client={queryClient}>
             <Gradebook />
         </QueryClientProvider>
-    );
+    )
 }

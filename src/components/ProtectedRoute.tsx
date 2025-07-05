@@ -9,8 +9,7 @@ interface ProtectedRouteProps {
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ requiredRole }) => {
     const { isAuthenticated, roles } = useAuth();
-    console.log("ROLES VERIFICADAS PELO PROTECTEDROUTE:", roles);
-
+    
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
     }

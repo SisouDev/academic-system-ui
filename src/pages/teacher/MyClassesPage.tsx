@@ -2,7 +2,7 @@ import { useQuery, QueryClient, QueryClientProvider } from '@tanstack/react-quer
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import { PageHeader } from '../../components/pageheader';
-import { FiBookOpen, FiUsers, FiFileText } from 'react-icons/fi';
+import {FiBookOpen, FiUsers, FiFileText, FiClipboard} from 'react-icons/fi';
 import { useAuth } from '../../hook/useAuth';
 
 
@@ -59,13 +59,14 @@ function MyClasses() {
                                     <p className="uk-text-meta uk-margin-remove-top">{cls.name}</p>
                                     <p>Curso: {cls.subjectInfo.courseName}</p>
                                     <div className="uk-flex uk-flex-column uk-flex-left">
-                                        {/* Link para a lista de alunos (próximo passo!) */}
                                         <Link to={`/teacher/class/${cls.id}/students`} className="uk-button uk-button-text uk-text-primary">
                                             <FiUsers className="uk-margin-small-right" /> Ver Alunos e Lançar Notas
                                         </Link>
-                                        {/* Link para o plano de aula */}
                                         <Link to={`/teacher/class/${cls.id}/lesson-plan`} className="uk-button uk-button-text uk-margin-small-top">
                                             <FiFileText className="uk-margin-small-right" /> Gerenciar Plano de Aula
+                                        </Link>
+                                        <Link to={`/teacher/class/${cls.id}/assessments`} className="uk-button uk-button-text uk-margin-small-top">
+                                            <FiClipboard className="uk-margin-small-right" /> Gerenciar Avaliações
                                         </Link>
                                     </div>
                                 </div>

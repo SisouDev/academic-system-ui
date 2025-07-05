@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
-import api from '../../services/api';
+import api from '../../../services/api.ts';
 import { FiSave } from 'react-icons/fi';
 
 type CourseFormData = {

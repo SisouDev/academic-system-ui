@@ -9,7 +9,7 @@ import {
     type PaginationState,
 } from '@tanstack/react-table';
 import { Link, useSearchParams } from 'react-router-dom';
-import api from '../../services/api';
+import api from '../../../services/api.ts';
 import { FiEdit, FiPlus } from 'react-icons/fi';
 
 type Student = {

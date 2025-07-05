@@ -3,7 +3,7 @@ import axios from 'axios';
 import { StatsCard } from '../../components/admin/StatsCard';
 import { FaUserGraduate, FaChalkboardTeacher, FaBook, FaBuilding } from 'react-icons/fa';
 import '../Dashboard.scss';
-import {StudentDistributionChart} from "../../components/admin/StudentDistributionChart.tsx";
+import {StudentDistributionChart} from "../../components/admin/student/StudentDistributionChart.tsx";
 import {RecentActivityFeed} from "../../components/admin/RecentActivityFeed.tsx";
 
 interface DashboardStats {
