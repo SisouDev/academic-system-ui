@@ -1,0 +1,22 @@
+.footer {
+  background: linear-gradient(to top, #212529, #343a40);
+  border-top: 3px solid var(--bs-primary);
+
+  .footer-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+  }
+
+  .footer-icons {
+    .icon {
+      color: #adb5bd;
+      margin: 0 0.75rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+
+      &:hover {
+        color: #fff;
+        transform: translateY(-3px);
+      }
+    }
+  }
+}

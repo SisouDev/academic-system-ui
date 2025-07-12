@@ -1,0 +1,74 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Node
+node_modules/
+dist/
+build/
+.vite/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+vite-error.log*
+
+# Environment
+.env
+.env.*.local
+.env.local
+
+# IDEs
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Cache
+.cache/
+.vscode/
+coverage/
+*.tsbuildinfo
+
+# Testing
+jest.config.js
+coverage/
+
+# Others
+*.log
+*.bak
+*.tmp
+*.swp
+
+# Local dev SSL certificates
+*.pem
+*.crt
+*.key
+
+# Vite preview cache
+.vitepress/
+
+docker-compose.override.yml

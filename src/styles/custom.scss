@@ -1,0 +1,52 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+
+$primary-highlight: #EDAFB8;      // Rosa pastel (destaques, botões)
+$section-bg: #f6ede7;      // Rosa/creme (fundo de cards)
+$body-background:   #DED8D2;      // Cinza claro (fundo geral)
+$success-feedback:  #B0C4B1;      // Verde suave (sucesso)
+$text-main:         #4A5759;      // Cinza azulado (texto)
+
+$font-family-serif: 'Bitter', serif;                     // Para textos longos
+$font-family-sans-serif-headings: 'Raleway', sans-serif; // Para títulos e destaques
+$font-family-sans-serif-base: 'Manrope', sans-serif;     // Para o corpo do texto e UI
+
+$primary:        $primary-highlight;
+$success:        $success-feedback;
+$body-bg:        $body-background;
+$body-color:     $text-main;
+$headings-color: $text-main;
+
+$card-bg:            $section-bg;
+$card-border-color:  darken($section-bg, 5%);
+$modal-content-bg:   $section-bg;
+$link-color:         $primary;
+$link-hover-color:   darken($primary, 10%);
+
+$font-family-sans-serif: $font-family-sans-serif-base;
+$headings-font-family:   $font-family-sans-serif-headings;
+$btn-font-family:        $headings-font-family;
+$font-family-serif:      $font-family-serif;
+
+$border-radius: 1rem;
+$btn-border-radius: 2rem;
+$form-select-border-radius: $border-radius;
+$input-border-radius: $border-radius;
+
+$theme-colors: map-merge(
+                $theme-colors,
+                (
+                        "primary": $primary,
+                        "success": $success
+                )
+);
+
+
+@import 'bootstrap/scss/bootstrap';
+
+
+.text-content {
+  font-family: $font-family-serif;
+  line-height: 1.7; // Melhora a legibilidade de textos longos
+}
