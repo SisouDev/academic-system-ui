@@ -9,3 +9,6 @@ export * from './dashboardEmployee.types';
 export * from './dashboardAdmin.types';
 export * from './subject.types';
 export * from './lesson.types';
+export * from './myClasses.types';
+export * from './lessonPlan.types';
+export * from './announcement.types';

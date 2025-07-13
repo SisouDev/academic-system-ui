@@ -1,6 +1,15 @@
 import { NavLink, Link } from 'react-router-dom';
 import { useAuthContext } from '../../contexts/auth/AuthContext';
-import {LayoutDashboard, BookCopy, GraduationCap, UserCheck, Settings, Users, BookOpenText} from 'lucide-react';
+import {
+    LayoutDashboard,
+    BookCopy,
+    GraduationCap,
+    UserCheck,
+    Settings,
+    Users,
+    BookOpenText,
+    Building2
+} from 'lucide-react';
 
 const navLinkStyle = {
     display: 'flex',
@@ -26,7 +35,7 @@ export const Sidenav = () => {
     return (
         <nav className="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary shadow-sm" style={{ width: '280px' }}>
             <Link to="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
-                <img src="/logo-icon.svg" alt="Logo" width="32" height="32" className="me-2" />
+                <Building2 size={32} className="me-2" />
                 <span className="fs-4" style={{ fontFamily: 'Raleway, sans-serif' }}>AcademicSystem</span>
             </Link>
             <hr />

@@ -8,7 +8,10 @@ import {AnimatePresence} from "framer-motion";
 import {AppLayout} from "./components/layout/AppLayout.tsx";
 import MySubjectsPage from "./pages/academic/MySubjectsPage.tsx";
 import SubjectDetailsPage from "./pages/academic/SubjectDetailsPage.tsx";
-import LessonPlansPage from "./pages/academic/LessonPlansPage.tsx";
+import MyClassesPage from "./pages/academic/MyClassesPage.tsx";
+import CourseSectionDetailPage from './pages/academic/CourseSectionDetailPage.tsx';
+import LessonPlanPage from "./pages/academic/LessonPlansPage.tsx";
+import SectionAnnouncementsPage from "./pages/academic/SectionAnnouncementsPage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -29,7 +32,10 @@ function App() {
                         <Route path="/dashboard" element={<DashboardPage />} />
                         <Route path="/my-subjects" element={<MySubjectsPage />} />
                         <Route path="/subjects/:subjectId" element={<SubjectDetailsPage />} />
-                        <Route path="/lesson-plans" element={<LessonPlansPage />} />
+                        <Route path="/my-classes" element={<MyClassesPage />} />
+                        <Route path="/my-classes/:id" element={<CourseSectionDetailPage />} />
+                        <Route path="/lesson-plans/section/:sectionId" element={<LessonPlanPage />} />
+                        <Route path="/announcements/section/:sectionId" element={<SectionAnnouncementsPage />} />
                     </Route>
                 </Route>
 

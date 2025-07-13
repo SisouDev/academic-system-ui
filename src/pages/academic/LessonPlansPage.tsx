@@ -1,72 +1,123 @@
-import { useQuery } from '@tanstack/react-query';
-import {Alert, Row, Col, Spinner, Card, Badge} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import { BookMarked } from 'lucide-react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Form, Button, Spinner, Alert, Card } from 'react-bootstrap';
+import { useForm, Controller } from 'react-hook-form';
 import api from '../../services/auth/api';
+import { RichTextEditor } from '../../features/common/RichTextEditor';
+import { BookCheck, Save } from 'lucide-react';
+import type { LessonPlanData, LessonPlanFormData } from '../../types';
+import { useEffect } from 'react';
+import axios from 'axios';
 
-type TeacherCourseSection = {
-    id: number;
-    subjectId: number;
-    name: string;
-    subjectName: string;
-    courseName: string;
-    totalLessons: number;
+const getLessonPlan = async (sectionId?: string): Promise<LessonPlanData | null> => {
+    if (!sectionId) return null;
+    try {
+        const { data } = await api.get(`/api/v1/course-sections/${sectionId}/lesson-plan`);
+        return data;
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
+            return null;
+        }
+        throw error;
+    }
 };
 
-const getMyCourseSections = async (): Promise<TeacherCourseSection[]> => {
-    const { data } = await api.get('/api/v1/teachers/my-sections');
-    return data;
-};
+const saveLessonPlan = (data: LessonPlanFormData) => api.post('/api/v1/lesson-plans', data);
 
-export default function LessonPlansPage() {
-    const { data: sections, isLoading, isError, error } = useQuery({
-        queryKey: ['myCourseSectionsForLessons'],
-        queryFn: getMyCourseSections,
+export default function LessonPlanPage() {
+    const { sectionId } = useParams<{ sectionId: string }>();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+
+    const { data: existingPlan, isLoading, isError, error } = useQuery({
+        queryKey: ['lessonPlan', sectionId],
+        queryFn: () => getLessonPlan(sectionId),
+        enabled: !!sectionId,
     });
+
+    const { control, handleSubmit, reset, formState: { isDirty } } = useForm<LessonPlanFormData>();
+
+    useEffect(() => {
+        if (existingPlan) {
+            reset({
+                objectives: existingPlan.objectives,
+                syllabusContent: existingPlan.syllabusContent,
+                bibliography: existingPlan.bibliography,
+            });
+        }
+    }, [existingPlan, reset]);
+
+    const { mutate, isPending, error: mutationError } = useMutation({
+        mutationFn: saveLessonPlan,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['lessonPlan', sectionId] });
+            navigate(`/my-classes/${sectionId}`);
+        },
+    });
+
+    const onSubmit = (formData: LessonPlanFormData) => {
+        mutate({ ...formData, courseSectionId: Number(sectionId) });
+    };
 
     if (isLoading) {
         return <div className="text-center p-5"><Spinner /></div>;
     }
 
     if (isError) {
-        return <Alert variant="danger">Erro ao carregar suas turmas: {error.message}</Alert>;
+        return <Alert variant="danger">Erro ao carregar o plano de aula: {error instanceof Error ? error.message : 'Erro desconhecido'}</Alert>;
     }
 
     return (
         <div>
-            <h1 className="mb-4" style={{ fontFamily: 'Raleway, sans-serif' }}>Gerenciar Planos de Aula</h1>
-            <p className="lead text-muted">Selecione uma turma para visualizar, adicionar ou editar as aulas e seus conteúdos.</p>
-            <hr />
+            <div className="d-flex align-items-center mb-4">
+                <BookCheck size={40} className="text-primary me-3"/>
+                <div>
+                    <h1 style={{ fontFamily: 'Raleway, sans-serif' }} className="mb-0">Plano de Aula</h1>
+                    <p className="text-muted">Defina os objetivos, conteúdo e bibliografia para a turma.</p>
+                </div>
+            </div>
 
-            <Row className="g-4 mt-3">
-                {sections && sections.length > 0 ? (
-                    sections.map((section: TeacherCourseSection) => (
-                        <Col key={section.id} md={6} lg={4}>
-                            <Card className="h-100 shadow-sm">
-                                <Card.Body className="d-flex flex-column">
-                                    <Card.Title as="h5" style={{ fontFamily: 'Raleway, sans-serif' }}>{section.subjectName}</Card.Title>
-                                    <Card.Subtitle className="mb-2 text-muted">{section.name}</Card.Subtitle>
-                                    <Card.Text className="mt-auto">
-                                        <Badge bg="secondary-subtle" text="dark" className="me-2">{section.courseName}</Badge>
-                                        <Badge bg="primary-subtle" text="primary-emphasis">{section.totalLessons} aulas criadas</Badge>
-                                    </Card.Text>
-                                    <Link
-                                        to={`/subjects/${section.subjectId}`}
-                                        className="btn btn-primary mt-3 d-flex align-items-center justify-content-center"
-                                    >
-                                        <BookMarked size={16} className="me-2" />
-                                        Gerenciar Aulas
-                                    </Link>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))
-                ) : (
-                    <Col>
-                        <Alert variant="info">Você não possui turmas ativas para gerenciar.</Alert>
-                    </Col>
-                )}
-            </Row>
+            <Card className="shadow-sm">
+                <Card.Body>
+                    <Form onSubmit={handleSubmit(onSubmit)}>
+                        {mutationError && <Alert variant="danger">{mutationError.message}</Alert>}
+
+                        <Form.Group className="mb-4">
+                            <Form.Label as="h5">Objetivos</Form.Label>
+                            <Controller
+                                name="objectives"
+                                control={control}
+                                render={({ field }) => <RichTextEditor value={field.value || ''} onEditorChange={field.onChange} />}
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-4">
+                            <Form.Label as="h5">Conteúdo Programático</Form.Label>
+                            <Controller
+                                name="syllabusContent"
+                                control={control}
+                                render={({ field }) => <RichTextEditor value={field.value || ''} onEditorChange={field.onChange} />}
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-4">
+                            <Form.Label as="h5">Bibliografia</Form.Label>
+                            <Controller
+                                name="bibliography"
+                                control={control}
+                                render={({ field }) => <RichTextEditor value={field.value || ''} onEditorChange={field.onChange} />}
+                            />
+                        </Form.Group>
+
+                        <div className="d-flex justify-content-end">
+                            <Button type="submit" disabled={isPending || !isDirty}>
+                                <Save size={18} className="me-2" />
+                                {isPending ? 'Salvando...' : 'Salvar Plano de Aula'}
+                            </Button>
+                        </div>
+                    </Form>
+                </Card.Body>
+            </Card>
         </div>
     );
 }

@@ -9,7 +9,6 @@ interface AuthLayoutProps {
 export const AuthLayout = ({ title, children }: AuthLayoutProps) => {
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">
-            {/* 2. Envolver o card com motion.div */}
             <motion.div
                 className="card shadow"
                 style={{ width: '24rem' }}

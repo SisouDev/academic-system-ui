@@ -16,17 +16,16 @@ interface TinyMceBlobInfo {
 }
 
 export const RichTextEditor = ({ value, onEditorChange }: RichTextEditorProps) => {
-    const imageUploadHandler = async (blobInfo: TinyMceBlobInfo, success: (url: string) => void, failure: (err: string) => void) => {
+    const imageUploadHandler = async (blobInfo: TinyMceBlobInfo): Promise<string> => {
         try {
             const url = await uploadFile(blobInfo.blob());
-            success(url);
+            return url;
         } catch (error) {
             console.error('Image upload failed:', error);
             if (error instanceof Error) {
-                failure('Falha no upload da imagem: ' + error.message);
-            } else {
-                failure('Ocorreu um erro desconhecido no upload da imagem.');
+                throw new Error('Falha no upload da imagem: ' + error.message);
             }
+            throw new Error('Ocorreu um erro desconhecido no upload da imagem.');
         }
     };
     return (

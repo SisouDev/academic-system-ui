@@ -5,7 +5,7 @@ export type TaskSummary = {
     status: string;
 };
 
-export type AnnouncementSummary = {
+export type AnnouncementSummaryEmployee = {
     id: number;
     title: string;
     scope: string;
@@ -41,7 +41,7 @@ export type EmployeeDashboardData = {
     unreadNotifications: number;
     pendingTasksCount: number;
     myOpenTasks: TaskSummary[];
-    recentAnnouncements: AnnouncementSummary[];
+    recentAnnouncements: AnnouncementSummaryEmployee[];
 
     librarianInfo?: LibrarianSummary;
     technicianInfo?: TechnicianSummary;
