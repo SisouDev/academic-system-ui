@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Alert, Spinner, Button, Modal, Card } from 'react-bootstrap';
 import api from '../../services/auth/api';
@@ -45,7 +45,11 @@ export default function SectionAnnouncementsPage() {
                                 Publicado por {announcement.createdByFullName} em {new Date(announcement.createdAt).toLocaleDateString()}
                             </small>
                         </Card.Header>
-                        <Card.Body>Ver detalhes...</Card.Body>
+                        <Card.Body>
+                            <Link to={`/announcements/${announcement.id}`}>
+                                Ver detalhes...
+                            </Link>
+                        </Card.Body>
                     </Card>
                 ))
             ) : (

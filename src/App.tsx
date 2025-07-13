@@ -12,6 +12,8 @@ import MyClassesPage from "./pages/academic/MyClassesPage.tsx";
 import CourseSectionDetailPage from './pages/academic/CourseSectionDetailPage.tsx';
 import LessonPlanPage from "./pages/academic/LessonPlansPage.tsx";
 import SectionAnnouncementsPage from "./pages/academic/SectionAnnouncementsPage.tsx";
+import AnnouncementDetailPage from "./pages/announcements/AnnouncementDetailPage.tsx";
+import GradebookPage from "./pages/academic/GradebookPage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -36,6 +38,10 @@ function App() {
                         <Route path="/my-classes/:id" element={<CourseSectionDetailPage />} />
                         <Route path="/lesson-plans/section/:sectionId" element={<LessonPlanPage />} />
                         <Route path="/announcements/section/:sectionId" element={<SectionAnnouncementsPage />} />
+                        <Route path="/announcements/:id" element={<AnnouncementDetailPage />} />
+                        <Route path="/gradebook/section/:sectionId" element={<GradebookPage />} />
+
+
                     </Route>
                 </Route>
 
