@@ -18,3 +18,5 @@ export * from './teacherNote.types';
 export * from './teacherStudents.types';
 export * from './internalRequest.types';
 export * from './task.types';
+export * from './supportTicket.types';
+export * from './agenda.types';

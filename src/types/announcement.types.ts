@@ -12,7 +12,6 @@ export type CreateAnnouncementData = {
     targetCourseSectionId: number;
     expiresAt?: string | null;
 };
-// src/types/announcement.types.ts
 
 export type PersonSummary = {
     id: number;

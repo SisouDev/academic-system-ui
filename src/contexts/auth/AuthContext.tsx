@@ -7,6 +7,7 @@ export type UserRole = 'ROLE_ADMIN' | 'ROLE_TEACHER' | 'ROLE_STUDENT' | 'ROLE_EM
 
 interface User {
     id: number;
+    personId: number;
     login: string;
     fullName: string;
     roles: UserRole[];
@@ -54,6 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 const decoded = jwtDecode<AuthTokenPayload>(token);
                 setUser({
                     id: decoded.userId,
+                    personId: decoded.personId,
                     login: decoded.sub,
                     fullName: decoded.fullName,
                     roles: decoded.roles,
@@ -77,6 +79,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const decoded = jwtDecode<AuthTokenPayload>(token);
             const authenticatedUser: User = {
                 id: decoded.userId,
+                personId: decoded.personId,
                 login: decoded.sub,
                 fullName: decoded.fullName,
                 roles: decoded.roles,

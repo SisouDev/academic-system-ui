@@ -8,7 +8,7 @@ import {
     Settings,
     Users,
     BookOpenText,
-    Building2
+    Building2, LifeBuoy
 } from 'lucide-react';
 
 const navLinkStyle = {
@@ -45,6 +45,12 @@ export const Sidenav = () => {
                     <NavLink to="/dashboard" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
                         <LayoutDashboard size={20} className="me-3" />
                         Meu Painel
+                    </NavLink>
+                </li>
+                <li className="nav-item">
+                    <NavLink to="/my-support-tickets" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                        <LifeBuoy size={20} className="me-3" />
+                        Suporte Técnico
                     </NavLink>
                 </li>
 

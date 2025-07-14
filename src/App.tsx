@@ -20,6 +20,9 @@ import AllMyStudentsPage from "./pages/academic/AllMyStudentsPage.tsx";
 import InternalRequestsPage from "./pages/requests/InternalRequestsPage.tsx";
 import CreateRequestPage from "./pages/requests/CreateRequestPage.tsx";
 import MyTasksPage from "./pages/tasks/MyTasksPage.tsx";
+import MySupportTicketsPage from "./pages/support/MySupportTicketsPage.tsx";
+import CreateSupportTicketPage from "./pages/support/CreateSupportTicketPage.tsx";
+import AgendaPage from "./pages/agenda/AgendaPage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -52,6 +55,9 @@ function App() {
                         <Route path="/internal-requests" element={<InternalRequestsPage />} />
                         <Route path="/requests/new" element={<CreateRequestPage />} />
                         <Route path="/my-tasks" element={<MyTasksPage />} />
+                        <Route path="/my-support-tickets" element={<MySupportTicketsPage />} />
+                        <Route path="/support/new" element={<CreateSupportTicketPage />} />
+                        <Route path="/agenda" element={<AgendaPage />} />
 
                     </Route>
                 </Route>

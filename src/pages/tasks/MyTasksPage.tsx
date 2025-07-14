@@ -8,6 +8,11 @@ import { formatTaskStatus } from '../../utils/formatters';
 
 const getMyTasks = async (): Promise<TaskSummaryTask[]> => {
     const { data } = await api.get<HateoasCollection<TaskSummaryTask>>('/api/v1/tasks/my-tasks');
+
+    if (!data || !data._embedded) {
+        return [];
+    }
+
     const embeddedKey = Object.keys(data._embedded)[0];
     return data._embedded[embeddedKey];
 };
