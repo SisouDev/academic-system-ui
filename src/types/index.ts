@@ -13,3 +13,8 @@ export * from './myClasses.types';
 export * from './lessonPlan.types';
 export * from './announcement.types';
 export * from './gradebook.types';
+export * from './attendance.types';
+export * from './teacherNote.types';
+export * from './teacherStudents.types';
+export * from './internalRequest.types';
+export * from './task.types';

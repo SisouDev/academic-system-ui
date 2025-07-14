@@ -1,10 +1,19 @@
-import { useParams } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Alert, Row, Col, Spinner, Table, Card } from 'react-bootstrap';
 import api from '../../services/auth/api';
 import { ActionCard } from '../../features/my-classes/components/ActionCard';
 import type { CourseSectionDetailsForTeacher } from '../../types';
-import {BookText, NotebookText, Star, ClipboardCheck, Megaphone, ListChecks, UserCircle} from 'lucide-react';
+import {
+    BookText,
+    NotebookText,
+    Star,
+    ClipboardCheck,
+    Megaphone,
+    ListChecks,
+    UserCircle,
+    NotebookPen
+} from 'lucide-react';
 
 const getSectionDetails = async (sectionId?: string): Promise<CourseSectionDetailsForTeacher> => {
     if (!sectionId) throw new Error("ID da turma não fornecido.");
@@ -98,6 +107,7 @@ export default function CourseSectionDetailPage() {
                                     <th>Nome do Aluno</th>
                                     <th>Email</th>
                                     <th className="text-center">Média na Matéria</th>
+                                    <th className={"text-end"}>Anotações</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -111,6 +121,11 @@ export default function CourseSectionDetailPage() {
                                             <td>{student.studentEmail}</td>
                                             <td className="text-center fw-bold">
                                                 {student.averageGradeInSection?.toFixed(2) || '--'}
+                                            </td>
+                                            <td className="text-end">
+                                                <Link to={`/teacher-notes/enrollment/${student.enrollmentId}`} className="btn btn-sm btn-outline-secondary">
+                                                    <NotebookPen size={16} /> Anotações
+                                                </Link>
                                             </td>
                                         </tr>
                                     ))

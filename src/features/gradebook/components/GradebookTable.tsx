@@ -1,4 +1,4 @@
-import { Table, Card } from 'react-bootstrap';
+import { Table, Card, Badge } from 'react-bootstrap';
 import { GradeCell } from './GradeCell';
 import type { GradebookData, GradebookStudent, AssessmentHeader } from '../../../types';
 
@@ -14,9 +14,14 @@ export const GradebookTable = ({ gradebook, sectionId }: GradebookTableProps) =>
                 <Table striped bordered hover responsive>
                     <thead>
                     <tr>
-                        <th className="sticky-col">Aluno</th>
+                        <th className="sticky-col align-middle">Aluno</th>
                         {gradebook.headers.map((header: AssessmentHeader) => (
-                            <th key={header.definitionId} className="text-center">{header.title}</th>
+                            <th key={header.definitionId} className="text-center">
+                                <div className="fw-bold">{header.title}</div>
+                                <div className="fw-normal small text-muted">{header.type}</div>
+                                <div className="fw-light small text-muted">{new Date(header.date + 'T00:00:00').toLocaleDateString()}</div>
+                                <Badge pill bg="secondary-subtle" text="dark">Peso: {header.weight}</Badge>
+                            </th>
                         ))}
                     </tr>
                     </thead>

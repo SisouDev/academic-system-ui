@@ -14,6 +14,12 @@ import LessonPlanPage from "./pages/academic/LessonPlansPage.tsx";
 import SectionAnnouncementsPage from "./pages/academic/SectionAnnouncementsPage.tsx";
 import AnnouncementDetailPage from "./pages/announcements/AnnouncementDetailPage.tsx";
 import GradebookPage from "./pages/academic/GradebookPage.tsx";
+import SectionAttendancePage from "./pages/academic/SectionAttendancePage.tsx";
+import TeacherNotesPage from "./pages/academic/TeacherNotesPage.tsx";
+import AllMyStudentsPage from "./pages/academic/AllMyStudentsPage.tsx";
+import InternalRequestsPage from "./pages/requests/InternalRequestsPage.tsx";
+import CreateRequestPage from "./pages/requests/CreateRequestPage.tsx";
+import MyTasksPage from "./pages/tasks/MyTasksPage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -40,7 +46,12 @@ function App() {
                         <Route path="/announcements/section/:sectionId" element={<SectionAnnouncementsPage />} />
                         <Route path="/announcements/:id" element={<AnnouncementDetailPage />} />
                         <Route path="/gradebook/section/:sectionId" element={<GradebookPage />} />
-
+                        <Route path="/attendance/section/:sectionId" element={<SectionAttendancePage />} />
+                        <Route path="/teacher-notes/enrollment/:enrollmentId" element={<TeacherNotesPage />} />
+                        <Route path="/my-classes/students" element={<AllMyStudentsPage />} />
+                        <Route path="/internal-requests" element={<InternalRequestsPage />} />
+                        <Route path="/requests/new" element={<CreateRequestPage />} />
+                        <Route path="/my-tasks" element={<MyTasksPage />} />
 
                     </Route>
                 </Route>

@@ -73,7 +73,7 @@ export const TeacherDashboard = ({ data }: { data: TeacherDashboardData }) => {
                     title="Requisições"
                     value={`${pendingRequestsCount || 0} pendentes`}
                     icon={ClipboardCheck}
-                    to="/requests"
+                    to="/internal-requests"
                     variant="warning"
                 />
             </Col>

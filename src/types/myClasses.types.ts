@@ -13,6 +13,7 @@ export type TeacherCourseSection = {
 };
 
 export type ClassListStudent = {
+    enrollmentId: number;
     studentId: number;
     studentName: string;
     studentEmail: string;
