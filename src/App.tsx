@@ -23,6 +23,7 @@ import MyTasksPage from "./pages/tasks/MyTasksPage.tsx";
 import MySupportTicketsPage from "./pages/support/MySupportTicketsPage.tsx";
 import CreateSupportTicketPage from "./pages/support/CreateSupportTicketPage.tsx";
 import AgendaPage from "./pages/agenda/AgendaPage.tsx";
+import NotificationsPage from "./pages/notifications/NotificationsPage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -58,6 +59,8 @@ function App() {
                         <Route path="/my-support-tickets" element={<MySupportTicketsPage />} />
                         <Route path="/support/new" element={<CreateSupportTicketPage />} />
                         <Route path="/agenda" element={<AgendaPage />} />
+                        <Route path="/notifications" element={<NotificationsPage />} />
+
 
                     </Route>
                 </Route>

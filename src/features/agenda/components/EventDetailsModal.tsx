@@ -4,6 +4,18 @@ import api from '../../../services/auth/api';
 import type {AgendaItem, MeetingDetails, MeetingParticipant} from '../../../types';
 import {useAuthContext} from "../../../contexts/auth/AuthContext.tsx";
 import {formatMeetingStatus} from "../../../utils/formatters.ts";
+
+
+interface EventDetailsModalProps {
+    event: AgendaItem | null;
+    show: boolean;
+    onHide: () => void;
+}
+
+const SafeHtmlRenderer = ({ html }: { html: string }) => {
+    return <div dangerouslySetInnerHTML={{ __html: html || '' }} />;
+};
+
 const getMeetingDetails = async (meetingId?: number): Promise<MeetingDetails | null> => {
     if (!meetingId) return null;
     const { data } = await api.get(`/api/v1/meetings/${meetingId}`);
@@ -15,7 +27,7 @@ const rsvpRequest = (data: { meetingId: number, status: string }) => {
 };
 
 
-export const EventDetailsModal = ({ event, show, onHide }: { event: AgendaItem | null, show: boolean, onHide: () => void }) => {
+export const EventDetailsModal = ({ event, show, onHide }: EventDetailsModalProps) => {
     const queryClient = useQueryClient();
     const { user } = useAuthContext();
 
@@ -50,19 +62,22 @@ export const EventDetailsModal = ({ event, show, onHide }: { event: AgendaItem |
                 <Modal.Title>{event.title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {isLoading ? <Spinner /> : (
+                <div className="mb-3">
+                    <SafeHtmlRenderer html={event.description} />
+                </div>
+                <hr/>
+                {isLoading ? <div className="text-center"><Spinner /></div> : (
                     details && event.isMeeting ? (
                         <>
-                            <p>{details.description}</p>
-                            <hr />
                             <h6>Participantes ({details.participants.length})</h6>
                             <ListGroup variant="flush" className="mb-3">
                                 {details.participants.map((p: MeetingParticipant) => (
-                                    <ListGroup.Item key={p.participant.id}>
-                                        {p.participant.fullName} {p.participant.id === details.organizer.id && <Badge bg="secondary-subtle" text="dark" pill>Organizador</Badge>}
-                                        <Badge bg="primary-subtle" text="primary-emphasis" className="ms-2">
-                                            {formatMeetingStatus(p.status)}
-                                        </Badge>
+                                    <ListGroup.Item key={p.id} className="d-flex justify-content-between align-items-center">
+                                        <span>
+                                            {p.participant.fullName}
+                                            {p.participant.id === details.organizer.id && <Badge bg="secondary-subtle" text="dark" pill className="ms-2">Organizador</Badge>}
+                                        </span>
+                                        <Badge bg="primary-subtle" text="primary-emphasis">{formatMeetingStatus(p.status)}</Badge>
                                     </ListGroup.Item>
                                 ))}
                             </ListGroup>
@@ -73,7 +88,7 @@ export const EventDetailsModal = ({ event, show, onHide }: { event: AgendaItem |
                                 <Button size="sm" variant={myStatus === 'DECLINED' ? 'danger' : 'outline-danger'} onClick={() => handleRsvp('DECLINED')} disabled={isRsvping}>Recusar</Button>
                             </div>
                         </>
-                    ) : <p>{event.description || "Este é um evento geral do calendário, sem detalhes adicionais."}</p>
+                    ) : <p>Este é um evento geral do calendário.</p>
                 )}
             </Modal.Body>
         </Modal>

@@ -26,7 +26,7 @@ export type MeetingParticipant = {
     id: number;
     participant: PersonSummary;
     status: 'PENDING' | 'ACCEPTED' | 'DECLINED' | 'TENTATIVE';
-}
+};
 
 export type MeetingDetails = {
     id: number;

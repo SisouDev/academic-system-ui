@@ -20,3 +20,4 @@ export * from './internalRequest.types';
 export * from './task.types';
 export * from './supportTicket.types';
 export * from './agenda.types';
+export * from './notification.types';
