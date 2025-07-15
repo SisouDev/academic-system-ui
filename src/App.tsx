@@ -24,6 +24,8 @@ import MySupportTicketsPage from "./pages/support/MySupportTicketsPage.tsx";
 import CreateSupportTicketPage from "./pages/support/CreateSupportTicketPage.tsx";
 import AgendaPage from "./pages/agenda/AgendaPage.tsx";
 import NotificationsPage from "./pages/notifications/NotificationsPage.tsx";
+import ProfilePage from "./pages/profile/ProfilePage.tsx";
+import UserProfilePage from "./pages/users/UserProfilePage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -41,6 +43,9 @@ function App() {
                 <Route path="/unauthorized" element={<h1>403 - Acesso Negado</h1>} />
                 <Route element={<AppLayout />}>
                     <Route element={<ProtectedRoute />}>
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="/users/:userId" element={<UserProfilePage />} />
+
                         <Route path="/dashboard" element={<DashboardPage />} />
                         <Route path="/my-subjects" element={<MySubjectsPage />} />
                         <Route path="/subjects/:subjectId" element={<SubjectDetailsPage />} />

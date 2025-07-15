@@ -21,3 +21,6 @@ export * from './task.types';
 export * from './supportTicket.types';
 export * from './agenda.types';
 export * from './notification.types';
+export * from './profile.types';
+export * from './role.types';
+

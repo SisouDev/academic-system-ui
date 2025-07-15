@@ -8,7 +8,7 @@ import {
     Settings,
     Users,
     BookOpenText,
-    Building2, LifeBuoy, Bell
+    Building2, LifeBuoy, Bell, User
 } from 'lucide-react';
 
 const navLinkStyle = {
@@ -94,6 +94,12 @@ export const Sidenav = () => {
                 )}
             </ul>
             <hr />
+            <div className="nav-item mb-2">
+                <NavLink to="/profile" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                    <User size={20} className="me-3"/>
+                    Meu Perfil
+                </NavLink>
+            </div>
 
             <div className="nav-item">
                 <NavLink to="/settings" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>

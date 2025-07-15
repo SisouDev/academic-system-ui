@@ -26,4 +26,5 @@ export interface StudentDashboardData {
     academicSummary: AcademicSummary;
     nextAssessment: UpcomingAssessmentInfo | null;
     upcomingEvents: CalendarEventInfo[];
+    unreadNotifications?: number;
 }

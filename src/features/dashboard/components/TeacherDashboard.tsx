@@ -87,7 +87,6 @@ export const TeacherDashboard = ({ data }: { data: TeacherDashboardData }) => {
                 />
             </Col>
 
-            {/* --- AGENDA DA SEMANA --- */}
             <Col xs={12} className="mt-5">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
                     <Card className="shadow-sm">
