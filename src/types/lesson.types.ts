@@ -21,3 +21,10 @@ export type SubjectDetails = {
     teacherEmail: string;
     lessons: Lesson[];
 };
+
+export interface LessonSummary {
+    id: number;
+    topic: string;
+    lessonDate: string;
+    subjectName: string;
+}

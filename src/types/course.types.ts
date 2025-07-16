@@ -26,3 +26,17 @@ export type CourseDetailsDto = {
     department: DepartmentSummaryDto;
     subjects: SubjectSummaryDto[];
 };
+
+export interface CourseSubject {
+    subjectId: number;
+    subjectName: string;
+    semester: number;
+}
+
+export interface CourseDetails {
+    id: number;
+    name: string;
+    description: string;
+    durationInSemesters: number;
+    subjects: CourseSubject[];
+}

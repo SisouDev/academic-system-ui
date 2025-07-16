@@ -26,6 +26,9 @@ import AgendaPage from "./pages/agenda/AgendaPage.tsx";
 import NotificationsPage from "./pages/notifications/NotificationsPage.tsx";
 import ProfilePage from "./pages/profile/ProfilePage.tsx";
 import UserProfilePage from "./pages/users/UserProfilePage.tsx";
+import MyGradesPage from "./pages/student/MyGradesPage.tsx";
+import MyAttendancePage from "./pages/student/MyAttendancePage.tsx";
+import MyCoursePage from "./pages/student/MyCoursePage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -41,23 +44,13 @@ function App() {
 
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/unauthorized" element={<h1>403 - Acesso Negado</h1>} />
+
                 <Route element={<AppLayout />}>
+
                     <Route element={<ProtectedRoute />}>
                         <Route path="/profile" element={<ProfilePage />} />
                         <Route path="/users/:userId" element={<UserProfilePage />} />
-
                         <Route path="/dashboard" element={<DashboardPage />} />
-                        <Route path="/my-subjects" element={<MySubjectsPage />} />
-                        <Route path="/subjects/:subjectId" element={<SubjectDetailsPage />} />
-                        <Route path="/my-classes" element={<MyClassesPage />} />
-                        <Route path="/my-classes/:id" element={<CourseSectionDetailPage />} />
-                        <Route path="/lesson-plans/section/:sectionId" element={<LessonPlanPage />} />
-                        <Route path="/announcements/section/:sectionId" element={<SectionAnnouncementsPage />} />
-                        <Route path="/announcements/:id" element={<AnnouncementDetailPage />} />
-                        <Route path="/gradebook/section/:sectionId" element={<GradebookPage />} />
-                        <Route path="/attendance/section/:sectionId" element={<SectionAttendancePage />} />
-                        <Route path="/teacher-notes/enrollment/:enrollmentId" element={<TeacherNotesPage />} />
-                        <Route path="/my-classes/students" element={<AllMyStudentsPage />} />
                         <Route path="/internal-requests" element={<InternalRequestsPage />} />
                         <Route path="/requests/new" element={<CreateRequestPage />} />
                         <Route path="/my-tasks" element={<MyTasksPage />} />
@@ -65,9 +58,28 @@ function App() {
                         <Route path="/support/new" element={<CreateSupportTicketPage />} />
                         <Route path="/agenda" element={<AgendaPage />} />
                         <Route path="/notifications" element={<NotificationsPage />} />
-
-
+                        <Route path="/announcements/:id" element={<AnnouncementDetailPage />} />
                     </Route>
+
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_STUDENT']} />}>
+                        <Route path="/grades" element={<MyGradesPage />} />
+                        <Route path="/attendance" element={<MyAttendancePage />} />
+                        <Route path="/my-subjects" element={<MySubjectsPage />} />
+                        <Route path="/subjects/:subjectId" element={<SubjectDetailsPage />} />
+                        <Route path="/my-course" element={<MyCoursePage />} />
+                    </Route>
+
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_TEACHER']} />}>
+                        <Route path="/my-classes" element={<MyClassesPage />} />
+                        <Route path="/my-classes/:id" element={<CourseSectionDetailPage />} />
+                        <Route path="/lesson-plans/section/:sectionId" element={<LessonPlanPage />} />
+                        <Route path="/announcements/section/:sectionId" element={<SectionAnnouncementsPage />} />
+                        <Route path="/gradebook/section/:sectionId" element={<GradebookPage />} />
+                        <Route path="/attendance/section/:sectionId" element={<SectionAttendancePage />} />
+                        <Route path="/teacher-notes/enrollment/:enrollmentId" element={<TeacherNotesPage />} />
+                        <Route path="/my-classes/students" element={<AllMyStudentsPage />} />
+                    </Route>
+
                 </Route>
 
                 <Route path="*" element={<h1>404: Página Não Encontrada</h1>} />
