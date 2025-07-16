@@ -31,6 +31,9 @@ export type LeaveRequestSummary = {
     status: string;
 };
 
+
+
+
 export type HrAnalystSummary = {
     pendingLeaveRequestsCount: number;
     newHiresThisMonth: number;

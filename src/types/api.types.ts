@@ -18,3 +18,21 @@ export interface CollectionModel<T> {
         [key: string]: Link;
     };
 }
+export interface PagedModel<T> {
+    _embedded?: {
+        [key: string]: T[];
+    };
+    _links: {
+        self: Link;
+        first?: Link;
+        prev?: Link;
+        next?: Link;
+        last?: Link;
+    };
+    page: {
+        size: number;
+        totalElements: number;
+        totalPages: number;
+        number: number;
+    };
+}

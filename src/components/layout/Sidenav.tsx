@@ -12,7 +12,7 @@ import {
     Bell,
     User,
     ClipboardList,
-    Percent
+    Percent, Briefcase, CalendarX2
 } from 'lucide-react';
 
 const navLinkStyle = {
@@ -111,6 +111,25 @@ export const Sidenav = () => {
                         </li>
                         <li className="nav-item">
                             <NavLink to="/admin/users" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}><Users size={20} className="me-3" />Gerenciar Usuários</NavLink>
+                        </li>
+                    </>
+                )}
+                {user?.roles.includes('ROLE_HR_ANALYST') && (
+                    <>
+                        <li className="nav-item mt-3">
+                            <small className="text-muted ps-3">RECURSOS HUMANOS</small>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/hr/leave-requests" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <Briefcase size={20} className="me-3" />
+                                Gerenciar Licenças
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/hr/absences" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <CalendarX2 size={20} className="me-3" />
+                                Gerenciar Ausências
+                            </NavLink>
                         </li>
                     </>
                 )}

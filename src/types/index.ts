@@ -25,5 +25,5 @@ export * from './profile.types';
 export * from './role.types';
 export * from './studentGrades.types';
 export * from './student.types';
-
+export * from './hr.types.ts';
 

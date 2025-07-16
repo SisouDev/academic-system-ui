@@ -29,6 +29,8 @@ import UserProfilePage from "./pages/users/UserProfilePage.tsx";
 import MyGradesPage from "./pages/student/MyGradesPage.tsx";
 import MyAttendancePage from "./pages/student/MyAttendancePage.tsx";
 import MyCoursePage from "./pages/student/MyCoursePage.tsx";
+import LeaveRequestManagementPage from "./pages/hr/LeaveRequestManagementPage.tsx";
+import AbsenceManagementPage from "./pages/hr/AbsenceManagementPage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -78,6 +80,12 @@ function App() {
                         <Route path="/attendance/section/:sectionId" element={<SectionAttendancePage />} />
                         <Route path="/teacher-notes/enrollment/:enrollmentId" element={<TeacherNotesPage />} />
                         <Route path="/my-classes/students" element={<AllMyStudentsPage />} />
+                    </Route>
+
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_HR_ANALYST']} />}>
+                        <Route path="/hr/leave-requests" element={<LeaveRequestManagementPage />} />
+                        <Route path="/hr/absences" element={<AbsenceManagementPage />} />
+
                     </Route>
 
                 </Route>
