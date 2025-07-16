@@ -4,11 +4,15 @@ import {
     LayoutDashboard,
     BookCopy,
     GraduationCap,
-    UserCheck,
     Settings,
     Users,
     BookOpenText,
-    Building2, LifeBuoy, Bell, User
+    Building2,
+    LifeBuoy,
+    Bell,
+    User,
+    ClipboardList,
+    Percent
 } from 'lucide-react';
 
 const navLinkStyle = {
@@ -62,14 +66,32 @@ export const Sidenav = () => {
 
                 {user?.roles.includes('ROLE_STUDENT') && (
                     <>
-                        <li className="nav-item">
-                            <NavLink to="/my-subjects" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}><BookOpenText size={20} className="me-3" />Minhas Matérias</NavLink>
+                        <li className="nav-item mt-3">
+                            <small className="text-muted ps-3">ACADÊMICO</small>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/grades" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}><GraduationCap size={20} className="me-3" />Minhas Notas</NavLink>
+                            <NavLink to="/my-course" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <GraduationCap size={20} className="me-3" />
+                                Meu Curso
+                            </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink to="/attendance" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}><UserCheck size={20} className="me-3" />Minha Frequência</NavLink>
+                            <NavLink to="/grades" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <ClipboardList size={20} className="me-3" />
+                                Minhas Notas
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/attendance" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <Percent size={20} className="me-3" />
+                                Minha Frequência
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/my-subjects" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <BookOpenText size={20} className="me-3" />
+                                Minhas Matrículas
+                            </NavLink>
                         </li>
                     </>
                 )}
