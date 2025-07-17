@@ -1,48 +1,17 @@
-import {Row, Col, Alert, Card, ListGroup, Badge} from 'react-bootstrap';
-import {ClipboardList, Bell, Megaphone} from 'lucide-react';
-
-import type {AnnouncementSummarySimple, EmployeeDashboardData, TaskSummary} from '../../../types';
-import { QuickAccessCard } from './common/QuickAccessCard';
-import { LibrarianWidget } from './widgets/LibrarianWidget';
-
+import { Row, Col, Card, ListGroup, Badge } from 'react-bootstrap';
 import { motion } from 'framer-motion';
+import { Megaphone } from 'lucide-react';
+import type { TaskSummary, AnnouncementSummary } from '../../../../types';
 
-export const EmployeeDashboard = ({ data }: { data: EmployeeDashboardData }) => {
-    if (!data) {
-        return <Alert variant="warning">Não foi possível carregar os dados do seu dashboard.</Alert>;
-    }
+interface GenericEmployeeWidgetsProps {
+    myOpenTasks: TaskSummary[];
+    recentAnnouncements: AnnouncementSummary[];
+}
 
-    const {
-        pendingTasksCount = 0,
-        unreadNotifications = 0,
-        myOpenTasks = [],
-        recentAnnouncements = [],
-        librarianInfo,
-    } = data;
-
+export const GenericEmployeeWidgets = ({ myOpenTasks, recentAnnouncements }: GenericEmployeeWidgetsProps) => {
     return (
-        <Row className="g-4">
-            <Col md={6} lg={4}>
-                <QuickAccessCard
-                    title="Minhas Tarefas Pendentes"
-                    value={pendingTasksCount}
-                    icon={ClipboardList}
-                    to="/my-tasks"
-                />
-            </Col>
-            <Col md={6} lg={4}>
-                <QuickAccessCard
-                    title="Notificações"
-                    value={`${unreadNotifications} não lidas`}
-                    icon={Bell}
-                    to="/notifications"
-                    variant="info"
-                />
-            </Col>
-
-            {librarianInfo && <LibrarianWidget data={librarianInfo} />}
-
-            <Col md={7} className="mt-5">
+        <Row className="g-4 mt-1">
+            <Col md={7}>
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
                     <Card className="shadow-sm">
                         <Card.Header as="h5">Minhas Tarefas Abertas</Card.Header>
@@ -62,13 +31,13 @@ export const EmployeeDashboard = ({ data }: { data: EmployeeDashboardData }) => 
                 </motion.div>
             </Col>
 
-            <Col md={5} className="mt-5">
+            <Col md={5}>
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
                     <Card className="shadow-sm">
                         <Card.Header as="h5"><Megaphone className="me-2" />Anúncios Recentes</Card.Header>
                         <ListGroup variant="flush">
                             {recentAnnouncements.length > 0 ? (
-                                recentAnnouncements.map((announcement: AnnouncementSummarySimple) => (
+                                recentAnnouncements.map((announcement: AnnouncementSummary) => (
                                     <ListGroup.Item key={announcement.id}>
                                         {announcement.title}
                                         <small className="text-muted d-block">{new Date(announcement.createdAt).toLocaleDateString()}</small>

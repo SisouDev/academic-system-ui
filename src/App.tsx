@@ -31,6 +31,7 @@ import MyAttendancePage from "./pages/student/MyAttendancePage.tsx";
 import MyCoursePage from "./pages/student/MyCoursePage.tsx";
 import LeaveRequestManagementPage from "./pages/hr/LeaveRequestManagementPage.tsx";
 import AbsenceManagementPage from "./pages/hr/AbsenceManagementPage.tsx";
+import SupportTicketManagementPage from "./pages/it/SupportTicketManagementPage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -88,6 +89,10 @@ function App() {
 
                     </Route>
 
+                </Route>
+
+                <Route element={<ProtectedRoute allowedRoles={['ROLE_TECHNICIAN']} />}>
+                    <Route path="/it/support-tickets" element={<SupportTicketManagementPage />} />
                 </Route>
 
                 <Route path="*" element={<h1>404: Página Não Encontrada</h1>} />

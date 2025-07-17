@@ -31,8 +31,11 @@ export type LeaveRequestSummary = {
     status: string;
 };
 
-
-
+export interface AnnouncementSummarySimple {
+    id: number;
+    title: string;
+    createdAt: string;
+}
 
 export type HrAnalystSummary = {
     pendingLeaveRequestsCount: number;
