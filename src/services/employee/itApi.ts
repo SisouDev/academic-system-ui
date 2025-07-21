@@ -1,4 +1,4 @@
-import api from '../auth/api';
+import api from '../auth/api.ts';
 import type { TechnicianDashboardData, SupportTicketDetails, AssetDetails } from '../../types';
 import type { CollectionModel, PagedModel } from '../../types';
 

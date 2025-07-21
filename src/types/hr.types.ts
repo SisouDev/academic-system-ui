@@ -37,3 +37,13 @@ export interface AbsenceDetails {
     attachmentUrl?: string;
     createdAt: string;
 }
+
+export interface EmployeeList {
+    id: number;
+    profilePictureUrl?: string;
+    fullName: string;
+    email: string;
+    jobPosition: string;
+    hiringDate: string;
+    baseSalary: number;
+}

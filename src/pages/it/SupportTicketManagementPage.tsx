@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { Container, Table, Badge, Button, Spinner, Alert } from 'react-bootstrap';
-import { getSupportTickets } from '../../services/it/itApi';
+import { getSupportTickets } from '../../services/employee/itApi.ts';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 

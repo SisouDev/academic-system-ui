@@ -12,7 +12,7 @@ import {
     Bell,
     User,
     ClipboardList,
-    Percent, Briefcase, CalendarX2, MessageSquareWarning, HardDrive
+    Percent, Briefcase, CalendarX2, MessageSquareWarning, HardDrive, Library, CircleDollarSign, Banknote, ShoppingCart
 } from 'lucide-react';
 
 const navLinkStyle = {
@@ -103,6 +103,31 @@ export const Sidenav = () => {
                         </li>
                     </>
                 )}
+                {user?.roles.includes('ROLE_FINANCE') && (
+                    <>
+                        <li className="nav-item mt-3">
+                            <small className="text-muted ps-3">FINANCEIRO</small>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/finance/payroll" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <Banknote size={20} className="me-3" />
+                                Folha de Pagamento
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/finance/purchase-orders" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <ShoppingCart size={20} className="me-3" />
+                                Ordens de Compra
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/hr/employees" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <Users size={20} className="me-3" />
+                                Funcionários
+                            </NavLink>
+                        </li>
+                    </>
+                )}
 
                 {user?.roles.includes('ROLE_ADMIN') && (
                     <>
@@ -111,6 +136,12 @@ export const Sidenav = () => {
                         </li>
                         <li className="nav-item">
                             <NavLink to="/admin/users" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}><Users size={20} className="me-3" />Gerenciar Usuários</NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/hr/employees" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <Users size={20} className="me-3" />
+                                Funcionários
+                            </NavLink>
                         </li>
                     </>
                 )}
@@ -131,6 +162,12 @@ export const Sidenav = () => {
                                 Gerenciar Ausências
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink to="/hr/employees" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <Users size={20} className="me-3" />
+                                Funcionários
+                            </NavLink>
+                        </li>
                     </>
                 )}
                 {user?.roles.includes('ROLE_TECHNICIAN') && (
@@ -148,6 +185,26 @@ export const Sidenav = () => {
                             <NavLink to="/it/assets" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
                                 <HardDrive size={20} className="me-3" />
                                 Gerenciar Ativos
+                            </NavLink>
+                        </li>
+                    </>
+                )}
+
+                {user?.roles.includes('ROLE_LIBRARIAN') && (
+                    <>
+                        <li className="nav-item mt-3">
+                            <small className="text-muted ps-3">BIBLIOTECA</small>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/library/loans" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <Library size={20} className="me-3" />
+                                Gerenciar Empréstimos
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/library/fines" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <CircleDollarSign size={20} className="me-3" />
+                                Gerenciar Multas
                             </NavLink>
                         </li>
                     </>

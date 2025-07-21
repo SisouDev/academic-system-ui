@@ -3,7 +3,7 @@ import { Row, Col, Alert, Spinner } from 'react-bootstrap';
 import { HardDrive, MessageSquareWarning, ClipboardList, Bell } from 'lucide-react';
 import { QuickAccessCard } from './common/QuickAccessCard';
 import { GenericEmployeeWidgets } from './common/GenericEmployeeWidgets';
-import { getTechnicianDashboardData } from '../../../services/it/itApi';
+import { getTechnicianDashboardData } from '../../../services/employee/itApi.ts';
 
 export const TechnicianDashboard = () => {
     const { data, isLoading, isError, error } = useQuery({

@@ -8,7 +8,8 @@ import { StudentDashboard } from '../../features/dashboard/components/StudentDas
 import { AdminDashboard } from '../../features/dashboard/components/AdminDashboard';
 import { TeacherDashboard } from '../../features/dashboard/components/TeacherDashboard';
 import { EmployeeDashboard } from '../../features/dashboard/components/EmployeeDashboard';
-
+import {LibrarianDashboard} from "../../features/dashboard/components/LibrarianDashboard.tsx";
+import {FinanceDashboard} from "../../features/dashboard/components/FinanceDashboard.tsx";
 
 
 const getDashboardData = async () => {
@@ -49,8 +50,17 @@ export default function DashboardPage() {
         if (user?.roles.includes('ROLE_TEACHER')) {
             return <TeacherDashboard data={data} />;
         }
+        /*if(user?.roles.includes('ROLE_TECHNICIAN')){
+            return <TechnicianDashboard data={data} />;
+        }*/
+        if (user?.roles.includes('ROLE_LIBRARIAN')) {
+            return <LibrarianDashboard />;
+        }
         if (user?.roles.includes('ROLE_STUDENT')) {
             return <StudentDashboard data={data} />;
+        }
+        if (user?.roles.includes('ROLE_FINANCE')) {
+            return <FinanceDashboard />;
         }
 
         return (

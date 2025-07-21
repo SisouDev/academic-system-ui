@@ -27,4 +27,7 @@ export * from './studentGrades.types';
 export * from './student.types';
 export * from './hr.types.ts';
 export * from './it.types.ts';
+export * from './library.types';
+export * from './dashboardLibrarian.types';
+export * from './finance.types';
 

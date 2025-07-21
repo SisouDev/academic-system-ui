@@ -32,6 +32,12 @@ import MyCoursePage from "./pages/student/MyCoursePage.tsx";
 import LeaveRequestManagementPage from "./pages/hr/LeaveRequestManagementPage.tsx";
 import AbsenceManagementPage from "./pages/hr/AbsenceManagementPage.tsx";
 import SupportTicketManagementPage from "./pages/it/SupportTicketManagementPage.tsx";
+import LoanManagementPage from "./pages/library/LoanManagementPage.tsx";
+import FineManagementPage from './pages/library/FineManagementPage.tsx';
+import PayrollManagementPage from "./pages/finance/PayrollManagementPage.tsx";
+import PurchaseOrderManagementPage from "./pages/finance/PurchaseOrderManagementPage.tsx";
+import SalaryStructureManagementPage from "./pages/finance/SalaryStructureManagementPage.tsx";
+import EmployeeListPage from "./pages/hr/EmployeeListPage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -83,19 +89,36 @@ function App() {
                         <Route path="/my-classes/students" element={<AllMyStudentsPage />} />
                     </Route>
 
-                    <Route element={<ProtectedRoute allowedRoles={['ROLE_HR_ANALYST']} />}>
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_HR_ANALYST', 'ROLE_FINANCE', 'ROLE_ADMIN']} />}>
+                        <Route path="/hr/employees" element={<EmployeeListPage />} />
                         <Route path="/hr/leave-requests" element={<LeaveRequestManagementPage />} />
                         <Route path="/hr/absences" element={<AbsenceManagementPage />} />
+                    </Route>
+
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_TECHNICIAN']} />}>
+                        <Route path="/it/support-tickets" element={<SupportTicketManagementPage />} />
+                    </Route>
+
+                    <Route path="*" element={<h1>404: Página Não Encontrada</h1>} />
+
+
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_LIBRARIAN']} />}>
+                        <Route path="/library/loans" element={<LoanManagementPage />} />
+                        <Route path="/library/fines" element={<FineManagementPage />} />
+
+                    </Route>
+
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_FINANCE', 'ROLE_ADMIN']} />}>
+                        <Route path="/finance/payroll" element={<PayrollManagementPage />} />
+                        <Route path="/finance/purchase-orders" element={<PurchaseOrderManagementPage />} />
+                        <Route path="/finance/salary-structures" element={<SalaryStructureManagementPage />} />
+                        <Route path="/hr/employees" element={<EmployeeListPage />} />
 
                     </Route>
 
                 </Route>
 
-                <Route element={<ProtectedRoute allowedRoles={['ROLE_TECHNICIAN']} />}>
-                    <Route path="/it/support-tickets" element={<SupportTicketManagementPage />} />
-                </Route>
 
-                <Route path="*" element={<h1>404: Página Não Encontrada</h1>} />
             </Routes>
         </AnimatePresence>
     );
