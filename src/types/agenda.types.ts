@@ -47,3 +47,19 @@ export type CreateMeetingData = {
     visibility: 'PUBLIC' | 'PRIVATE';
     participantIds: number[];
 };
+
+export interface CreateCalendarEventData {
+    title: string;
+    description: string;
+    type: 'MEETING' | 'ACADEMIC_EVENT' | 'HOLIDAY' | 'OTHER';
+    startTime: string;
+    endTime: string;
+    scope: 'INSTITUTION' | 'DEPARTMENT';
+    targetDepartmentId?: number | null;
+}
+
+
+export interface DepartmentSelection {
+    id: number;
+    name: string;
+}

@@ -43,6 +43,8 @@ import PurchaseRequestManagementPage from "./pages/finance/PurchaseRequestManage
 import ReceivablesManagementPage from "./pages/finance/ReceivablesManagementPage.tsx";
 import PayablesManagementPage from "./pages/finance/PayablesManagementPage.tsx";
 import AssetManagementPage from "./pages/it/AssetManagementPage.tsx";
+import InternalRequestManagementPage from "./features/requests/components/InternalRequestManagementPage.tsx";
+import CreateCalendarEventPage from "./pages/agenda/CreateCalendarEventPage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -134,6 +136,11 @@ function App() {
                         <Route path="/finance/receivables" element={<ReceivablesManagementPage />} />
                         <Route path="/finance/payables" element={<PayablesManagementPage />} />
 
+                    </Route>
+
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_SECRETARY', 'ROLE_ADMIN']} />}>
+                        <Route path="/requests/internal" element={<InternalRequestManagementPage />} />
+                        <Route path="/calendar/new-event" element={<CreateCalendarEventPage />} />
                     </Route>
 
                 </Route>

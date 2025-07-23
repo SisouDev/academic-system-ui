@@ -12,6 +12,7 @@ import {LibrarianDashboard} from "../../features/dashboard/components/LibrarianD
 import {FinanceDashboard} from "../../features/dashboard/components/FinanceDashboard.tsx";
 import {HrAnalystDashboard} from "../../features/dashboard/components/HrAnalystDashboard.tsx";
 import {TechnicianDashboard} from "../../features/dashboard/components/TechnicianDashboard.tsx";
+import {SecretaryDashboard} from "../../features/dashboard/components/SecretaryDashboard.tsx";
 
 
 const getDashboardData = async () => {
@@ -25,17 +26,17 @@ export default function DashboardPage() {
     console.log("DASHBOARD RENDERIZADO COM ROLES:", user?.roles);
 
 
-    // Use uma query condicional. Ela só será executada se o usuário NÃO tiver um dashboard dedicado.
     const useGenericQuery = !user?.roles.includes('ROLE_FINANCE_MANAGER') &&
         !user?.roles.includes('ROLE_FINANCE_ASSISTANT') &&
         !user?.roles.includes('ROLE_LIBRARIAN') &&
         !user?.roles.includes('ROLE_TECHNICIAN') &&
+        !user?.roles.includes('ROLE_SECRETARY') &&
         !user?.roles.includes('ROLE_HR_ANALYST');
 
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['dashboardData'],
         queryFn: getDashboardData,
-        enabled: useGenericQuery, // Só ativa esta query para roles genéricas
+        enabled: useGenericQuery,
     });
 
     if (isLoading && useGenericQuery) {
@@ -47,12 +48,10 @@ export default function DashboardPage() {
     }
 
     const renderDashboardByRole = () => {
-        // --- ORDEM CORRETA: DO MAIS ESPECÍFICO PARA O MAIS GENÉRICO ---
         if (user?.roles.includes('ROLE_ADMIN')) {
             return <AdminDashboard data={data} />;
         }
         if (user?.roles.includes('ROLE_FINANCE_MANAGER') || user?.roles.includes('ROLE_FINANCE_ASSISTANT')) {
-            // Este componente busca seus próprios dados, então não precisa da 'prop data'
             return <FinanceDashboard />;
         }
         if (user?.roles.includes('ROLE_HR_ANALYST')) {
@@ -70,7 +69,9 @@ export default function DashboardPage() {
         if (user?.roles.includes('ROLE_STUDENT')) {
             return <StudentDashboard data={data} />;
         }
-        // A verificação de EMPLOYEE genérico vem por último
+        if (user?.roles.includes('ROLE_SECRETARY')) {
+            return <SecretaryDashboard />;
+        }
         if (user?.roles.includes('ROLE_EMPLOYEE')) {
             return <EmployeeDashboard data={data} />;
         }

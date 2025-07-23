@@ -21,7 +21,7 @@ import {
     CircleDollarSign,
     Banknote,
     ShoppingCart,
-    PlusCircle, ArrowUpCircle, ArrowDownCircle
+    PlusCircle, ArrowUpCircle, ArrowDownCircle, FileText, CalendarPlus
 } from 'lucide-react';
 
 const navLinkStyle = {
@@ -265,6 +265,25 @@ export const Sidenav = () => {
                             <NavLink to="/library/fines" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
                                 <CircleDollarSign size={20} className="me-3" />
                                 Gerenciar Multas
+                            </NavLink>
+                        </li>
+                    </>
+                )}
+                {user?.roles.includes('ROLE_SECRETARY') && (
+                    <>
+                        <li className="nav-item mt-3">
+                            <small className="text-muted ps-3">SECRETARIA</small>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/requests/internal" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <FileText size={20} className="me-3" />
+                                Requisições Internas
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/calendar/new-event" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <CalendarPlus size={20} className="me-3" />
+                                Agendar Evento
                             </NavLink>
                         </li>
                     </>
