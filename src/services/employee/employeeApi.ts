@@ -1,5 +1,5 @@
 import api from '../../services/auth/api';
-import type { EmployeeList } from '../../types';
+import type {StaffList} from '../../types';
 import type { PagedModel } from '../../types';
 
 const extractFromCollection = <T>(response: PagedModel<T>): T[] => {
@@ -8,8 +8,10 @@ const extractFromCollection = <T>(response: PagedModel<T>): T[] => {
     return response._embedded[listKey] || [];
 };
 
-export const getEmployees = async (searchTerm: string = ''): Promise<EmployeeList[]> => {
+export const getEmployees = async (searchTerm: string = ''): Promise<StaffList[]> => {
     const url = `/api/v1/employees?searchTerm=${searchTerm}&sort=firstName,asc`;
-    const response = await api.get<PagedModel<EmployeeList>>(url);
+    const response = await api.get<PagedModel<StaffList>>(url);
     return extractFromCollection(response.data);
 };
+
+

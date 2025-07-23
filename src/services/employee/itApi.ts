@@ -1,5 +1,11 @@
 import api from '../auth/api.ts';
-import type { TechnicianDashboardData, SupportTicketDetails, AssetDetails } from '../../types';
+import type {
+    TechnicianDashboardData,
+    SupportTicketDetails,
+    AssetDetails,
+    CreateAssetData,
+    AssetDetailsIt
+} from '../../types';
 import type { CollectionModel, PagedModel } from '../../types';
 
 
@@ -30,3 +36,25 @@ export const getItAssets = async (status: string, assignedToId?: number | 'me'):
     const response = await api.get<PagedModel<AssetDetails>>(url);
     return extractFromCollection(response.data);
 };
+
+export const getAssets = async (status?: string): Promise<AssetDetailsIt[]> => {
+    const params = new URLSearchParams();
+    if (status) params.append('status', status);
+
+    const response = await api.get<PagedModel<AssetDetailsIt>>(`/api/v1/it/assets?${params.toString()}`);
+    return extractFromCollection(response.data);
+};
+
+export const createAsset = async (data: CreateAssetData): Promise<AssetDetails> => {
+    const { data: newAsset } = await api.post('/api/v1/it/assets', data);
+    return newAsset.content || newAsset;
+};
+
+export const assignAsset = async ({ assetId, employeeId }: { assetId: number; employeeId: number }) => {
+    return api.patch(`/api/v1/it/assets/${assetId}/assign/${employeeId}`);
+};
+
+export const returnAssetToStock = async (assetId: number) => {
+    return api.patch(`/api/v1/it/assets/${assetId}`, { status: 'IN_STOCK', assignedToId: null });
+};
+

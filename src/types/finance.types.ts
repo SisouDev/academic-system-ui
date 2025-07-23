@@ -45,3 +45,48 @@ export interface SalaryStructureRequest {
     level: string;
     baseSalary: number;
 }
+
+export interface CreatePurchaseOrderData {
+    supplier: string;
+    description: string;
+    amount: number;
+    dueDate: string;
+}
+
+export interface CreatePurchaseRequestData {
+    itemName: string;
+    quantity: number;
+    justification?: string;
+}
+
+export interface PurchaseRequest {
+    id: number;
+    requesterName: string;
+    itemName: string;
+    quantity: number;
+    justification: string;
+    status: 'PENDING' | 'APPROVED_BY_ASSISTANT' | 'REJECTED_BY_ASSISTANT' | 'PROCESSED';
+    createdAt: string;
+}
+
+export interface FinancialTransaction {
+    id: number;
+    person: {
+        id: number;
+        fullName: string;
+    };
+    description: string;
+    amount: number;
+    status: 'PENDING' | 'PAID' | 'CANCELLED' | 'COMPLETED';
+    type: 'TUITION' | 'FINE' | 'SALARY_PAYMENT' | 'PURCHASE' | 'OTHER';
+    transactionDate: string;
+}
+
+export interface PayableSummary {
+    payableId: string;
+    type: string;
+    description: string;
+    amount: number;
+    dueDate: string;
+    status: string;
+}

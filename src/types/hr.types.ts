@@ -47,3 +47,13 @@ export interface EmployeeList {
     hiringDate: string;
     baseSalary: number;
 }
+
+export interface StaffList {
+    id: number;
+    profilePictureUrl?: string;
+    fullName: string;
+    email: string;
+    positionOrDegree: string;
+    hiringDate?: string;
+    baseSalary?: number;
+}

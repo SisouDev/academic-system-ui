@@ -7,7 +7,9 @@ export type SupportTicketSummary = {
     priority: string;
     category: string;
     createdAt: string;
-    requesterName: string;
+    requester: {
+        fullName: string;
+    };
 };
 
 export type SupportTicketDetails = {

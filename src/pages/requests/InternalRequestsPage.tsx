@@ -6,7 +6,7 @@ import { Eye, PlusCircle } from 'lucide-react';
 import api from '../../services/auth/api';
 import type { InternalRequestDetails, HateoasCollection } from '../../types';
 import { RequestDetailsModal } from '../../features/requests/components/RequestDetailsModal';
-import { formatRequestStatus, formatRequestType, formatUrgencyLevel } from '../../utils/formatters';
+import { formatRequestStatus, formatRequestType, formatUrgencyLevel } from '../../utils/requests/components/formatters.ts';
 
 const getMyRequests = async (): Promise<InternalRequestDetails[]> => {
     const { data } = await api.get<HateoasCollection<InternalRequestDetails>>('/api/v1/internal-requests/my-requests');

@@ -4,7 +4,7 @@ import api from '../../services/auth/api';
 import { Link } from 'react-router-dom';
 import { PlusCircle } from 'lucide-react';
 import type { TaskSummaryTask, HateoasCollection } from '../../types';
-import { formatTaskStatus } from '../../utils/formatters';
+import { formatTaskStatus } from '../../utils/requests/components/formatters.ts';
 
 const getMyTasks = async (): Promise<TaskSummaryTask[]> => {
     const { data } = await api.get<HateoasCollection<TaskSummaryTask>>('/api/v1/tasks/my-tasks');

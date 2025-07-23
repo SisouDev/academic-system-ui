@@ -12,7 +12,7 @@ import type {AgendaItem, ApiAgendaItem, HateoasCollection} from '../../types';
 import { EventDetailsModal } from '../../features/agenda/components/EventDetailsModal';
 import { CreateMeetingModal } from '../../features/agenda/components/CreateMeetingModal';
 import { useAuthContext } from '../../contexts/auth/AuthContext';
-import {formatEventType} from "../../utils/formatters.ts";
+import {formatEventType} from "../../utils/requests/components/formatters.ts";
 
 const locales = { 'pt-BR': ptBR };
 const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales });

@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../../services/auth/api';
 import type {AgendaItem, MeetingDetails, MeetingParticipant} from '../../../types';
 import {useAuthContext} from "../../../contexts/auth/AuthContext.tsx";
-import {formatMeetingStatus} from "../../../utils/formatters.ts";
+import {formatMeetingStatus} from "../../../utils/requests/components/formatters.ts";
 
 
 interface EventDetailsModalProps {

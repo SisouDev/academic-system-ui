@@ -1,5 +1,5 @@
 import type {TaskSummary} from "./dashboardEmployee.types.ts";
-import type {AnnouncementSummary} from "./announcement.types.ts";
+import type {AnnouncementSummary, PersonSummary} from "./announcement.types.ts";
 
 export interface TechnicianDashboardData {
     unreadNotifications: number;
@@ -32,4 +32,26 @@ export interface AssetDetails {
     assignedTo?: { fullName: string };
     purchaseDate: string;
     location: string;
+}
+
+export type AssetStatus = 'IN_STOCK' | 'IN_USE' | 'IN_MAINTENANCE' | 'DISPOSED';
+
+export interface AssetDetailsIt {
+    id: number;
+    name: string;
+    assetTag: string;
+    serialNumber: string;
+    purchaseDate: string;
+    purchaseCost: number;
+    status: AssetStatus;
+    createdAt: string;
+    assignedTo: PersonSummary | null;
+}
+
+export interface CreateAssetData {
+    name: string;
+    assetTag: string;
+    serialNumber: string;
+    purchaseDate: string;
+    purchaseCost: number;
 }

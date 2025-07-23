@@ -1,8 +1,9 @@
 import api from '../../services/auth/api';
 import type {
-    FinanceDashboardData,
+    CreatePurchaseOrderData, CreatePurchaseRequestData,
+    FinanceDashboardData, FinancialTransaction, PayableSummary,
     PayrollRecordDetails,
-    PurchaseOrderDetails,
+    PurchaseOrderDetails, PurchaseRequest,
     SalaryStructure,
     SalaryStructureRequest
 } from '../../types';
@@ -52,4 +53,37 @@ export const updateSalaryStructure = async ({ id, ...data }: SalaryStructureRequ
 
 export const deleteSalaryStructure = async (id: number) => {
     return api.delete(`/api/v1/salary-structures/${id}`);
+};
+
+export const createPurchaseOrder = async (data: CreatePurchaseOrderData) => {
+    return api.post('/api/v1/purchase-orders', data);
+};
+
+export const createPurchaseRequest = async (data: CreatePurchaseRequestData) => {
+    return api.post('/api/v1/purchase-requests', data);
+};
+
+export const getPurchaseRequests = async (status: string): Promise<PurchaseRequest[]> => {
+    const response = await api.get<PagedModel<PurchaseRequest>>(`/api/v1/purchase-requests?status=${status}&sort=createdAt,desc`);
+    return extractFromCollection(response.data);
+};
+
+export const updatePurchaseRequestStatus = async ({ id, newStatus }: { id: number; newStatus: string }) => {
+    return api.patch(`/api/v1/purchase-requests/${id}/status?newStatus=${newStatus}`);
+};
+
+export const getFinancialTransactions = async (type: string, status: string): Promise<FinancialTransaction[]> => {
+    const response = await api.get<PagedModel<FinancialTransaction>>(
+        `/api/v1/financial-transactions?type=${type}&status=${status}&sort=transactionDate,desc`
+    );
+    return extractFromCollection(response.data);
+};
+
+export const markTransactionAsPaid = async (id: number) => {
+    return api.patch(`/api/v1/financial-transactions/${id}/pay`);
+};
+
+export const getPendingPayables = async (): Promise<PayableSummary[]> => {
+    const { data } = await api.get('/api/v1/finance/payables');
+    return data._embedded?.payableSummaryDtoList || [];
 };

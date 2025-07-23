@@ -4,22 +4,22 @@ import { Alert, Spinner, Table, Badge, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Eye, PlusCircle } from 'lucide-react';
 import api from '../../services/auth/api';
-import type { SupportTicketSummary, HateoasCollection } from '../../types';
+import type { SupportTicketSummary } from '../../types';
 import { TicketDetailsModal } from '../../features/support/components/TicketDetailsModal';
 
-import { formatTicketStatus, formatTicketPriority, formatTicketCategory } from '../../utils/formatters';
+import { formatTicketStatus, formatTicketPriority, formatTicketCategory } from '../../utils/requests/components/formatters.ts';
 
-const getTickets = async (): Promise<SupportTicketSummary[]> => {
-    const { data } = await api.get<HateoasCollection<SupportTicketSummary>>('/api/v1/support-tickets');
-    return data._embedded?.supportTicketSummaryDtoList || [];
+const getMyTickets = async (): Promise<SupportTicketSummary[]> => {
+    const { data } = await api.get<SupportTicketSummary[]>('/api/v1/support-tickets/my-tickets');
+    return data || [];
 };
 
 export default function MySupportTicketsPage() {
     const [selectedTicket, setSelectedTicket] = useState<SupportTicketSummary | null>(null);
 
     const { data: tickets, isLoading, isError, error } = useQuery({
-        queryKey: ['supportTickets'],
-        queryFn: getTickets,
+        queryKey: ['mySupportTickets'],
+        queryFn: getMyTickets,
     });
 
     const getPriorityBadgeVariant = (priority: string) => {
@@ -75,7 +75,7 @@ export default function MySupportTicketsPage() {
                         <td><Badge bg={getPriorityBadgeVariant(ticket.priority)}>{formatTicketPriority(ticket.priority)}</Badge></td>
                         <td>{formatTicketCategory(ticket.category)}</td>
                         <td>{new Date(ticket.createdAt).toLocaleDateString('pt-BR')}</td>
-                        <td>{ticket.requesterName}</td>
+                        <td>{ticket.requester.fullName}</td>
                         <td>
                             <Button variant="outline-primary" size="sm" onClick={() => setSelectedTicket(ticket)}>
                                 <Eye size={16} /> Detalhes

@@ -10,6 +10,8 @@ import { TeacherDashboard } from '../../features/dashboard/components/TeacherDas
 import { EmployeeDashboard } from '../../features/dashboard/components/EmployeeDashboard';
 import {LibrarianDashboard} from "../../features/dashboard/components/LibrarianDashboard.tsx";
 import {FinanceDashboard} from "../../features/dashboard/components/FinanceDashboard.tsx";
+import {HrAnalystDashboard} from "../../features/dashboard/components/HrAnalystDashboard.tsx";
+import {TechnicianDashboard} from "../../features/dashboard/components/TechnicianDashboard.tsx";
 
 
 const getDashboardData = async () => {
@@ -20,17 +22,24 @@ const getDashboardData = async () => {
 export default function DashboardPage() {
     const { user } = useAuthContext();
 
+    console.log("DASHBOARD RENDERIZADO COM ROLES:", user?.roles);
+
+
+    // Use uma query condicional. Ela só será executada se o usuário NÃO tiver um dashboard dedicado.
+    const useGenericQuery = !user?.roles.includes('ROLE_FINANCE_MANAGER') &&
+        !user?.roles.includes('ROLE_FINANCE_ASSISTANT') &&
+        !user?.roles.includes('ROLE_LIBRARIAN') &&
+        !user?.roles.includes('ROLE_TECHNICIAN') &&
+        !user?.roles.includes('ROLE_HR_ANALYST');
+
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ['dashboardData'],
         queryFn: getDashboardData,
+        enabled: useGenericQuery, // Só ativa esta query para roles genéricas
     });
 
-    if (isLoading) {
-        return (
-            <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '60vh' }}>
-                <Spinner animation="border" style={{ width: '3rem', height: '3rem' }} />
-            </div>
-        );
+    if (isLoading && useGenericQuery) {
+        return <div className="text-center p-5"><Spinner /></div>;
     }
 
     if (isError) {
@@ -38,45 +47,41 @@ export default function DashboardPage() {
     }
 
     const renderDashboardByRole = () => {
+        // --- ORDEM CORRETA: DO MAIS ESPECÍFICO PARA O MAIS GENÉRICO ---
         if (user?.roles.includes('ROLE_ADMIN')) {
             return <AdminDashboard data={data} />;
         }
-        if (user?.roles.includes('ROLE_LIBRARIAN') ||
-            user?.roles.includes('ROLE_TECHNICIAN') ||
-            user?.roles.includes('ROLE_HR_ANALYST') ||
-            user?.roles.includes('ROLE_EMPLOYEE')) {
-            return <EmployeeDashboard data={data} />;
+        if (user?.roles.includes('ROLE_FINANCE_MANAGER') || user?.roles.includes('ROLE_FINANCE_ASSISTANT')) {
+            // Este componente busca seus próprios dados, então não precisa da 'prop data'
+            return <FinanceDashboard />;
+        }
+        if (user?.roles.includes('ROLE_HR_ANALYST')) {
+            return <HrAnalystDashboard />;
+        }
+        if (user?.roles.includes('ROLE_LIBRARIAN')) {
+            return <LibrarianDashboard />;
+        }
+        if (user?.roles.includes('ROLE_TECHNICIAN')) {
+            return <TechnicianDashboard />;
         }
         if (user?.roles.includes('ROLE_TEACHER')) {
             return <TeacherDashboard data={data} />;
         }
-        /*if(user?.roles.includes('ROLE_TECHNICIAN')){
-            return <TechnicianDashboard data={data} />;
-        }*/
-        if (user?.roles.includes('ROLE_LIBRARIAN')) {
-            return <LibrarianDashboard />;
-        }
         if (user?.roles.includes('ROLE_STUDENT')) {
             return <StudentDashboard data={data} />;
         }
-        if (user?.roles.includes('ROLE_FINANCE')) {
-            return <FinanceDashboard />;
+        // A verificação de EMPLOYEE genérico vem por último
+        if (user?.roles.includes('ROLE_EMPLOYEE')) {
+            return <EmployeeDashboard data={data} />;
         }
 
-        return (
-            <div className="text-center">
-                <h2>Dashboard em Construção</h2>
-                <p>Ainda estamos preparando um painel exclusivo para o seu tipo de acesso.</p>
-            </div>
-        );
+        return <Alert variant="info">Dashboard em construção para o seu perfil.</Alert>;
     };
 
     return (
         <div>
-            <h1 className="mb-1" style={{ fontFamily: 'Raleway, sans-serif' }}>
-                Meu Painel
-            </h1>
-            <p className="lead text-muted" style={{ fontFamily: 'Manrope, sans-serif' }}>
+            <h1 className="mb-1" style={{ fontFamily: 'Raleway, sans-serif' }}>Meu Painel</h1>
+            <p className="lead text-muted">
                 Olá, <strong>{user?.fullName}</strong>! Aqui está um resumo rápido de suas atividades.
             </p>
             <hr className="my-4"/>

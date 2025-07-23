@@ -12,7 +12,16 @@ import {
     Bell,
     User,
     ClipboardList,
-    Percent, Briefcase, CalendarX2, MessageSquareWarning, HardDrive, Library, CircleDollarSign, Banknote, ShoppingCart
+    Percent,
+    Briefcase,
+    CalendarX2,
+    MessageSquareWarning,
+    HardDrive,
+    Library,
+    CircleDollarSign,
+    Banknote,
+    ShoppingCart,
+    PlusCircle, ArrowUpCircle, ArrowDownCircle
 } from 'lucide-react';
 
 const navLinkStyle = {
@@ -103,7 +112,7 @@ export const Sidenav = () => {
                         </li>
                     </>
                 )}
-                {user?.roles.includes('ROLE_FINANCE') && (
+                {user?.roles.includes('ROLE_FINANCE_MANAGER') && (
                     <>
                         <li className="nav-item mt-3">
                             <small className="text-muted ps-3">FINANCEIRO</small>
@@ -126,6 +135,37 @@ export const Sidenav = () => {
                                 Funcionários
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink to="/finance/receivables" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <ArrowUpCircle size={20} className="me-3" />
+                                Contas a Receber
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/finance/payables" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <ArrowDownCircle size={20} className="me-3" />
+                                Contas a Pagar
+                            </NavLink>
+                        </li>
+                    </>
+                )}
+                {user?.roles.includes('ROLE_FINANCE_ASSISTANT') && (
+                    <>
+                        <li className="nav-item mt-3">
+                            <small className="text-muted ps-3">ASSISTENTE FINANCEIRO</small>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/finance/purchase-requests" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <ClipboardList size={20} className="me-3" />
+                                Analisar Requisições
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/finance/purchase-orders/new" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <PlusCircle size={20} className="me-3" />
+                                Nova Ordem de Compra
+                            </NavLink>
+                        </li>
                     </>
                 )}
 
@@ -143,6 +183,25 @@ export const Sidenav = () => {
                                 Funcionários
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink to="/finance/receivables" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <ArrowUpCircle size={20} className="me-3" />
+                                Contas a Receber
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/finance/payables" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <ArrowDownCircle size={20} className="me-3" />
+                                Contas a Pagar
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink to="/it/assets" style={({isActive}) => isActive ? activeNavLinkStyle : navLinkStyle}>
+                                <HardDrive size={20} className="me-3" />
+                                Gerenciar Ativos
+                            </NavLink>
+                        </li>
+
                     </>
                 )}
                 {user?.roles.includes('ROLE_HR_ANALYST') && (
@@ -187,6 +246,7 @@ export const Sidenav = () => {
                                 Gerenciar Ativos
                             </NavLink>
                         </li>
+
                     </>
                 )}
 
@@ -209,6 +269,7 @@ export const Sidenav = () => {
                         </li>
                     </>
                 )}
+
             </ul>
             <hr />
             <div className="nav-item mb-2">

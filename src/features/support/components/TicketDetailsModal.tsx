@@ -4,7 +4,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useAuthContext } from '../../../contexts/auth/AuthContext';
 import api from '../../../services/auth/api';
 import type { SupportTicketDetails, UpdateTicketData } from '../../../types';
-import { formatTicketStatus, formatTicketPriority, formatTicketCategory } from '../../../utils/formatters';
+import { formatTicketStatus, formatTicketPriority, formatTicketCategory } from '../../../utils/requests/components/formatters.ts';
 import {useEffect} from "react";
 
 const getTicketDetails = async (ticketId?: number | null): Promise<SupportTicketDetails | null> => {
