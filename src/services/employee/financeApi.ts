@@ -1,11 +1,11 @@
 import api from '../../services/auth/api';
 import type {
-    CreatePurchaseOrderData, CreatePurchaseRequestData,
-    FinanceDashboardData, FinancialTransaction, PayableSummary,
+    CreatePurchaseOrderData, CreatePurchaseRequestData, DirectorFinancialReport,
+    FinanceDashboardData, FinancialTransaction, PagedResponse, PayableSummary,
     PayrollRecordDetails,
     PurchaseOrderDetails, PurchaseRequest,
     SalaryStructure,
-    SalaryStructureRequest
+    SalaryStructureRequest, TransactionDetail
 } from '../../types';
 import type { PagedModel } from '../../types';
 
@@ -86,4 +86,20 @@ export const markTransactionAsPaid = async (id: number) => {
 export const getPendingPayables = async (): Promise<PayableSummary[]> => {
     const { data } = await api.get('/api/v1/finance/payables');
     return data._embedded?.payableSummaryDtoList || [];
+};
+
+export const getProblematicTransactions = async (page = 0, size = 10): Promise<PagedResponse<TransactionDetail>> => {
+    const { data } = await api.get(`/api/v1/finance/transactions/problematic`, {
+        params: {
+            page,
+            size,
+            sort: 'createdAt,desc',
+        },
+    });
+    return data;
+};
+
+export const getDirectorFinancialReport = async (): Promise<DirectorFinancialReport> => {
+    const { data } = await api.get('/api/v1/finance/director-report');
+    return data;
 };

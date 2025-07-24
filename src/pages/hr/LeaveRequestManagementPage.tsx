@@ -3,7 +3,7 @@ import { Container, Table, Badge, Button, Spinner, Alert, ButtonGroup } from 're
 import { getLeaveRequests, reviewLeaveRequest } from '../../services/employee/hrApi';
 import { Check, X } from 'lucide-react';
 import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale'; // O import agora será utilizado
+import { ptBR } from 'date-fns/locale';
 
 const LeaveRequestManagementPage = () => {
     const queryClient = useQueryClient();

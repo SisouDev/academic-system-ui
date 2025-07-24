@@ -1,5 +1,11 @@
 import api from '../auth/api';
-import type {LibrarianDashboardData, LoanDetails, FineDetails, LibraryItemDetails} from '../../types';
+import type {
+    LibrarianDashboardData,
+    LoanDetails,
+    FineDetails,
+    LibraryItemDetails,
+    CreateLibraryItemData, UpdateLibraryItemData, CreateLoanData
+} from '../../types';
 import type { PagedModel } from '../../types';
 
 const extractFromCollection = <T>(response: PagedModel<T>): T[] => {
@@ -31,7 +37,39 @@ export const markFineAsPaid = async (id: number) => {
     return api.patch(`/api/v1/financial-transactions/${id}/pay`);
 };
 
+
+export const getLibraryItems = async (page = 0, size = 15): Promise<PagedModel<LibraryItemDetails>> => {
+    const response = await api.get<PagedModel<LibraryItemDetails>>(`/api/v1/library/items?page=${page}&size=${size}&sort=title,asc`);
+    return response.data;
+};
+
+export const createLibraryItem = async (itemData: CreateLibraryItemData): Promise<LibraryItemDetails> => {
+    const { data } = await api.post('/api/v1/library/items', itemData);
+    return data;
+};
+
+export const updateLibraryItem = async ({ id, ...itemData }: { id: number } & UpdateLibraryItemData): Promise<LibraryItemDetails> => {
+    const { data } = await api.patch(`/api/v1/library/items/${id}`, itemData);
+    return data;
+};
+
+export const deleteLibraryItem = async (id: number): Promise<void> => {
+    await api.delete(`/api/v1/library/items/${id}`);
+};
+
 export const searchLibraryItems = async (query: string): Promise<LibraryItemDetails[]> => {
-    const response = await api.get<PagedModel<LibraryItemDetails>>(`/api/v1/library-items?search=${query}`);
-    return extractFromCollection(response.data);
+    if (query.length < 3) return [];
+    const response = await api.get<PagedModel<LibraryItemDetails>>(`/api/v1/library/items?title=${query}`);
+    return response.data._embedded?.libraryItemDetailsDtoList || [];
+};
+
+
+export const createLoan = async (loanData: CreateLoanData): Promise<LoanDetails> => {
+    const { data } = await api.post('/api/v1/loans', loanData);
+    return data;
+};
+
+export const getLoanById = async (id: number): Promise<LoanDetails> => {
+    const { data } = await api.get(`/api/v1/loans/${id}`);
+    return data;
 };

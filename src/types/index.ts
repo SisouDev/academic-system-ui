@@ -31,4 +31,5 @@ export * from './library.types';
 export * from './dashboardLibrarian.types';
 export * from './finance.types';
 export * from './secretary.types.ts';
+export * from './dashboardDirector.types';
 

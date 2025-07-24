@@ -1,5 +1,5 @@
 import api from '../auth/api';
-import type { HrAnalystDashboardData, LeaveRequestDetails, AbsenceDetails } from '../../types';
+import type {HrAnalystDashboardData, LeaveRequestDetails, AbsenceDetails, PagedResponse} from '../../types';
 import type { CollectionModel, PagedModel } from '../../types';
 
 const extractFromCollection = <T>(response: CollectionModel<T> | PagedModel<T>): T[] => {
@@ -11,12 +11,23 @@ const extractFromCollection = <T>(response: CollectionModel<T> | PagedModel<T>):
 
 export const getHrDashboardData = async (): Promise<HrAnalystDashboardData> => {
     const { data } = await api.get('/api/v1/dashboard/hr-analyst');
-    return data.content || data; // Lida com a resposta HATEOAS
+    return data.content || data;
 };
 
-export const getLeaveRequests = async (status: string): Promise<LeaveRequestDetails[]> => {
-    const response = await api.get<PagedModel<LeaveRequestDetails>>(`/api/v1/leave-requests?status=${status}&sort=createdAt,desc`);
-    return extractFromCollection(response.data);
+export const getLeaveRequests = async (
+    status: 'PENDING' | 'APPROVED' | 'REJECTED',
+    page = 0,
+    size = 10
+): Promise<PagedResponse<LeaveRequestDetails>> => {
+    const { data } = await api.get<PagedResponse<LeaveRequestDetails>>('/api/v1/leave-requests', {
+        params: {
+            page,
+            size,
+            status,
+            sort: 'startDate,asc'
+        }
+    });
+    return data;
 };
 
 export const reviewLeaveRequest = async ({ id, status }: { id: number; status: 'APPROVED' | 'REJECTED' }) => {

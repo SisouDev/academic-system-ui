@@ -4,7 +4,7 @@ import type {
     SupportTicketDetails,
     AssetDetails,
     CreateAssetData,
-    AssetDetailsIt
+    AssetDetailsIt, PagedResponse
 } from '../../types';
 import type { CollectionModel, PagedModel } from '../../types';
 
@@ -23,9 +23,28 @@ export const getTechnicianDashboardData = async (): Promise<TechnicianDashboardD
 };
 
 
-export const getSupportTickets = async (status: string): Promise<SupportTicketDetails[]> => {
-    const response = await api.get<PagedModel<SupportTicketDetails>>(`/api/v1/support-tickets?status=${status}&sort=createdAt,desc`);
-    return extractFromCollection(response.data);
+export const getSupportTickets = async (
+    params: {
+        status?: 'OPEN' | 'IN_PROGRESS' | 'CLOSED';
+        priority?: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
+        page?: number;
+        size?: number;
+    }
+): Promise<PagedResponse<SupportTicketDetails>> => {
+    const queryParams = new URLSearchParams();
+    if (params.status) queryParams.append('status', params.status);
+    if (params.priority) queryParams.append('priority', params.priority);
+    if (params.page !== undefined) queryParams.append('page', String(params.page));
+    if (params.size !== undefined) queryParams.append('size', String(params.size));
+
+    queryParams.append('sort', 'priority,desc');
+    queryParams.append('sort', 'createdAt,desc');
+
+    const { data } = await api.get<PagedResponse<SupportTicketDetails>>(
+        `/api/v1/support-tickets?${queryParams.toString()}`
+    );
+
+    return data;
 };
 
 export const getItAssets = async (status: string, assignedToId?: number | 'me'): Promise<AssetDetails[]> => {

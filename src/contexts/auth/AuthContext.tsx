@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import api from '../../services/auth/api';
 
 export type UserRole = 'ROLE_ADMIN' | 'ROLE_TEACHER' | 'ROLE_STUDENT' | 'ROLE_EMPLOYEE' | 'ROLE_LIBRARIAN' | 'ROLE_TECHNICIAN' | 'ROLE_HR_ANALYST' | 'ROLE_FINANCE'
-    | 'ROLE_FINANCE_MANAGER' | 'ROLE_FINANCE_ASSISTANT' | 'ROLE_SECRETARY' | 'ROLE_COORDINATOR';
+    | 'ROLE_FINANCE_MANAGER' | 'ROLE_FINANCE_ASSISTANT' | 'ROLE_SECRETARY' | 'ROLE_COORDINATOR' | 'ROLE_DIRECTOR';
 
 interface User {
     id: number;

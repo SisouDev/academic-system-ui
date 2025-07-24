@@ -13,6 +13,7 @@ import {FinanceDashboard} from "../../features/dashboard/components/FinanceDashb
 import {HrAnalystDashboard} from "../../features/dashboard/components/HrAnalystDashboard.tsx";
 import {TechnicianDashboard} from "../../features/dashboard/components/TechnicianDashboard.tsx";
 import {SecretaryDashboard} from "../../features/dashboard/components/SecretaryDashboard.tsx";
+import {DirectorDashboard} from "../../features/dashboard/components/DirectorDashboard.tsx";
 
 
 const getDashboardData = async () => {
@@ -50,6 +51,9 @@ export default function DashboardPage() {
     const renderDashboardByRole = () => {
         if (user?.roles.includes('ROLE_ADMIN')) {
             return <AdminDashboard data={data} />;
+        }
+        if (user?.roles.includes('ROLE_DIRECTOR')) {
+            return <DirectorDashboard />;
         }
         if (user?.roles.includes('ROLE_FINANCE_MANAGER') || user?.roles.includes('ROLE_FINANCE_ASSISTANT')) {
             return <FinanceDashboard />;

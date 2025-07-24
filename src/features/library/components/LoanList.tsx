@@ -60,8 +60,8 @@ export const LoanList = ({ status }: LoanListProps) => {
             {loans && loans.length > 0 ? (
                 loans.map(loan => (
                     <tr key={loan.id}>
-                        <td>{loan.studentName}</td>
-                        <td>{loan.libraryItemTitle}</td>
+                        <td>{loan.borrower.fullName}</td>
+                        <td>{loan.item.title}</td>
                         <td>{format(new Date(loan.loanDate), 'dd/MM/yyyy', { locale: ptBR })}</td>
                         <td>{format(new Date(loan.dueDate), 'dd/MM/yyyy', { locale: ptBR })}</td>
                         <td><Badge bg={getStatusVariant(loan.status)}>{loan.status}</Badge></td>

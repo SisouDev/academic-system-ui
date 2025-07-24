@@ -5,17 +5,24 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import type { LoanDetails } from '../../../types';
 import { ReviewLoanModal } from './ReviewLoanModal';
+import {LoanDetailsModal} from "./LoanDetailsModal.tsx";
 
 type ActionType = 'APPROVE' | 'REJECT' | 'RETURN';
 
-const getStatusVariant = (status: LoanDetails['status']): string => {
+const getStatusVariant = (status: LoanDetails['status']) => {
     switch (status) {
-        case 'PENDING': return 'warning';
-        case 'ACTIVE': return 'primary';
-        case 'OVERDUE': return 'danger';
-        case 'RETURNED': return 'success';
-        case 'REJECTED': return 'secondary';
-        default: return 'light';
+        case 'PENDING':
+            return { bg: 'warning', text: 'dark' };
+        case 'ACTIVE':
+            return { bg: 'primary', text: 'white' };
+        case 'OVERDUE':
+            return { bg: 'danger', text: 'white' };
+        case 'RETURNED':
+            return { bg: 'success', text: 'white' };
+        case 'REJECTED':
+            return { bg: 'secondary', text: 'white' };
+        default:
+            return { bg: 'light', text: 'dark' };
     }
 };
 
@@ -27,11 +34,13 @@ interface LoanTableRowProps {
 
 export const LoanTableRow = ({ loan, onUpdateStatus, isUpdating }: LoanTableRowProps) => {
     const [showModal, setShowModal] = useState(false);
+    const [showDetailsModal, setShowDetailsModal] = useState(false);
     const [action, setAction] = useState<ActionType | null>(null);
 
     const handleActionClick = (selectedAction: ActionType) => {
         setAction(selectedAction);
         setShowModal(true);
+        setShowDetailsModal(true);
     };
 
     const handleConfirm = () => {
@@ -47,14 +56,14 @@ export const LoanTableRow = ({ loan, onUpdateStatus, isUpdating }: LoanTableRowP
         <>
             <tr>
                 <td>
-                    <div className="fw-bold">{loan.libraryItemTitle}</div>
-                    <div className="small text-muted">{loan.libraryItemType}</div>
+                    <div className="fw-bold">{loan.item.title}</div>
+                    <div className="small text-muted">{loan.item.type}</div>
                 </td>
-                <td>{loan.studentName}</td>
+                <td>{loan.borrower.fullName}</td>
                 <td>{format(new Date(loan.loanDate), 'dd/MM/yy', { locale: ptBR })}</td>
                 <td>{format(new Date(loan.dueDate), 'dd/MM/yy', { locale: ptBR })}</td>
                 <td>
-                    <Badge bg={getStatusVariant(loan.status)} text={loan.status === 'PENDING' ? 'dark' : 'white'}>
+                    <Badge bg={getStatusVariant(loan.status).bg} text={getStatusVariant(loan.status).text}>
                         {loan.status}
                     </Badge>
                 </td>
@@ -64,6 +73,8 @@ export const LoanTableRow = ({ loan, onUpdateStatus, isUpdating }: LoanTableRowP
                             <MoreVertical size={20} />
                         </Dropdown.Toggle>
                         <Dropdown.Menu align="end">
+                            <Dropdown.Item onClick={() => setShowDetailsModal(true)}>Ver Detalhes do Empréstimo</Dropdown.Item>
+                            <Dropdown.Divider />
                             {loan.status === 'PENDING' && (
                                 <>
                                     <Dropdown.Item onClick={() => handleActionClick('APPROVE')}><Check size={16} className="me-2 text-success"/>Aprovar</Dropdown.Item>
@@ -73,7 +84,6 @@ export const LoanTableRow = ({ loan, onUpdateStatus, isUpdating }: LoanTableRowP
                             {(loan.status === 'ACTIVE' || loan.status === 'OVERDUE') && (
                                 <Dropdown.Item onClick={() => handleActionClick('RETURN')}><Undo2 size={16} className="me-2 text-primary"/>Registrar Devolução</Dropdown.Item>
                             )}
-                            <Dropdown.Item href="#">Ver Detalhes do Empréstimo</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </td>
@@ -85,10 +95,16 @@ export const LoanTableRow = ({ loan, onUpdateStatus, isUpdating }: LoanTableRowP
                     onHide={() => setShowModal(false)}
                     onConfirm={handleConfirm}
                     action={action}
-                    itemTitle={loan.libraryItemTitle}
+                    itemTitle={loan.item.title}
                     isSubmitting={isUpdating}
                 />
             )}
+            <LoanDetailsModal
+                loanId={loan.id}
+                show={showDetailsModal}
+                onHide={() => setShowDetailsModal(false)}
+            />
         </>
+
     );
 };

@@ -45,6 +45,13 @@ import PayablesManagementPage from "./pages/finance/PayablesManagementPage.tsx";
 import AssetManagementPage from "./pages/it/AssetManagementPage.tsx";
 import InternalRequestManagementPage from "./features/requests/components/InternalRequestManagementPage.tsx";
 import CreateCalendarEventPage from "./pages/agenda/CreateCalendarEventPage.tsx";
+import {ProblematicTransactionsPage} from "./pages/finance/ProblematicTransactionsPage.tsx";
+import {PendingLeaveRequestsPage} from "./pages/hr/PendingLeaveRequestsPage.tsx";
+import {HighPriorityTicketsPage} from "./pages/it/HighPriorityTicketsPage.tsx";
+import {PendingInternalRequestsPage} from "./pages/requests/PendingInternalRequestsPage.tsx";
+import {FinancialReportsPage} from "./pages/finance/FinancialReportsPage.tsx";
+import {LibraryItemManagementPage} from "./pages/library/LibraryItemManagementPage.tsx";
+import {RegisterLoanPage} from "./pages/library/RegisterLoanPage.tsx";
 
 function App() {
     const { isAuthenticated } = useAuthContext();
@@ -96,15 +103,18 @@ function App() {
                         <Route path="/my-classes/students" element={<AllMyStudentsPage />} />
                     </Route>
 
-                    <Route element={<ProtectedRoute allowedRoles={['ROLE_HR_ANALYST', 'ROLE_FINANCE_MANAGER', 'ROLE_FINANCE_ASSISTANT', 'ROLE_ADMIN']} />}>
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_HR_ANALYST', 'ROLE_FINANCE_MANAGER', 'ROLE_FINANCE_ASSISTANT', 'ROLE_ADMIN', 'ROLE_DIRECTOR']} />}>
                         <Route path="/hr/employees" element={<EmployeeListPage />} />
                         <Route path="/hr/leave-requests" element={<LeaveRequestManagementPage />} />
                         <Route path="/hr/absences" element={<AbsenceManagementPage />} />
+                        <Route path="/hr/leave-requests/pending" element={<PendingLeaveRequestsPage />} />
+
                     </Route>
 
-                    <Route element={<ProtectedRoute allowedRoles={['ROLE_TECHNICIAN', 'ROLE_ADMIN']} />}>
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_TECHNICIAN', 'ROLE_ADMIN', 'ROLE_DIRECTOR']} />}>
                         <Route path="/it/support-tickets" element={<SupportTicketManagementPage />} />
                         <Route path="/it/assets" element={<AssetManagementPage />} />
+                        <Route path="/it/support-tickets/high-priority" element={<HighPriorityTicketsPage />} />
 
                     </Route>
 
@@ -112,6 +122,8 @@ function App() {
 
 
                     <Route element={<ProtectedRoute allowedRoles={['ROLE_LIBRARIAN', 'ROLE_ADMIN']} />}>
+                        <Route path="/library/loans/new" element={<RegisterLoanPage />} />
+                        <Route path="/library/items" element={<LibraryItemManagementPage />} />
                         <Route path="/library/loans" element={<LoanManagementPage />} />
                         <Route path="/library/fines" element={<FineManagementPage />} />
 
@@ -135,12 +147,18 @@ function App() {
                     <Route element={<ProtectedRoute allowedRoles={['ROLE_FINANCE_MANAGER', 'ROLE_ADMIN']} />}>
                         <Route path="/finance/receivables" element={<ReceivablesManagementPage />} />
                         <Route path="/finance/payables" element={<PayablesManagementPage />} />
-
                     </Route>
 
-                    <Route element={<ProtectedRoute allowedRoles={['ROLE_SECRETARY', 'ROLE_ADMIN']} />}>
-                        <Route path="/requests/internal" element={<InternalRequestManagementPage />} />
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_DIRECTOR', 'ROLE_ADMIN', 'ROLE_SECRETARY']} />}>
+                    <Route path="/requests/internal" element={<InternalRequestManagementPage />} />
                         <Route path="/calendar/new-event" element={<CreateCalendarEventPage />} />
+                        <Route path="/requests/internal/pending" element={<PendingInternalRequestsPage />} />
+                    </Route>
+                    <Route element={<ProtectedRoute allowedRoles={['ROLE_DIRECTOR', 'ROLE_ADMIN']} />}>
+                        <Route path="/reports/financial" element={<FinancialReportsPage />} />
+                        <Route path="/finance/transactions/problematic" element={<ProblematicTransactionsPage />} />
+
+                        {/* <Route path="/director/financial-reports" element={<FinancialReportsPage />} /> */}
                     </Route>
 
                 </Route>

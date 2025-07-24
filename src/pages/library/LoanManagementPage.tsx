@@ -4,6 +4,9 @@ import {useState} from "react";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {getLoans, updateLoanStatus} from "../../services/employee/libraryApi.ts";
 import {LoanTableRow} from "../../features/library/components/LoanTableRow.tsx";
+import { LinkContainer } from 'react-router-bootstrap';
+
+import {PlusCircle} from "lucide-react";
 type LoanStatusFilter = 'PENDING' | 'ACTIVE' | 'OVERDUE' | 'RETURNED' | 'REJECTED';
 
 const LoanManagementPage = () => {
@@ -32,7 +35,6 @@ const LoanManagementPage = () => {
     ];
 
     return (
-        // Usamos um <div> simples como contêiner principal, igual às outras páginas
         <div>
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h1 className="h2 mb-0">Gerenciar Empréstimos</h1>
@@ -47,9 +49,15 @@ const LoanManagementPage = () => {
                         </Button>
                     ))}
                 </ButtonGroup>
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                    <LinkContainer to="/library/loans/new">
+                        <Button>
+                            <PlusCircle size={18} className="me-2" /> Registrar Novo Empréstimo
+                        </Button>
+                    </LinkContainer>
+                </div>
             </div>
 
-            {/* Removemos o Card e o Card.Body e renderizamos a Tabela diretamente */}
             {isLoading && <div className="text-center p-5"><Spinner /></div>}
             {isError && <Alert variant="danger" className="m-3">Não foi possível carregar os empréstimos.</Alert>}
             {loans && (
